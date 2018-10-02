@@ -1,0 +1,35 @@
+{
+  "name": "project-databio",
+  "private": false,
+  "version": "0.5.5",
+  "description": "Databio pilots ",
+  "repository": "git+ssh://git@github.com:hslayers/examples.git",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "",
+    "prestart": "npm install",
+    "start": "http-server -a localhost -p 8000",
+    "pretest": "npm install",
+    "test": "karma start test/karma.conf.js",
+    "test-single-run": "karma start test/karma.conf.js  --single-run",
+    "preupdate-webdriver": "npm install",
+    "update-webdriver": "webdriver-manager update",
+    "preprotractor": "npm run update-webdriver",
+    "protractor": "protractor test/protractor-conf.js"
+  },
+  "dependencies": {
+    "cesium": "^1.49.0",
+    "jquery": "^3.3.1",
+    "requirejs": "^2.3.5"
+  },
+  "devDependencies": {
+    "angular-jsdoc": "^1.5.0",
+    "browserify": "^16.2.0",
+    "grunt": "^1.0.2",
+    "grunt-angular-gettext": "^2.3.2",
+    "grunt-contrib-uglify": "^3.3.0",
+    "grunt-contrib-uglify-es": "git://github.com/gruntjs/grunt-contrib-uglify.git#harmony",
+    "grunt-jsbeautifier": "0.2.x",
+    "grunt-jsdoc": "^2.2.1"
+  }
+}
