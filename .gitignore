@@ -1,2 +1,4 @@
 node_modules
 *.mo
+bundle.js
+bundle.min.js
