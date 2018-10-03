@@ -2,8 +2,8 @@
   "name": "project-databio",
   "private": false,
   "version": "0.5.5",
-  "description": "Databio pilots ",
-  "repository": "git+ssh://git@github.com:hslayers/examples.git",
+  "description": "Databio pilots",
+  "repository": "git+ssh://git@github.com:hslayers/project-databio.git",
   "license": "MIT",
   "scripts": {
     "postinstall": "",
@@ -18,7 +18,7 @@
     "protractor": "protractor test/protractor-conf.js"
   },
   "dependencies": {
-    "cesium": "^1.49.0",
+    "cesium": "1.43.0",
     "jquery": "^3.3.1",
     "requirejs": "^2.3.5"
   },
