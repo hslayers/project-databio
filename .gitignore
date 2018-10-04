@@ -3,3 +3,4 @@ node_modules
 merged.po
 land/bundle.js
 land/bundle.min.js
+land/translations_extended.js
