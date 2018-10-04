@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         nggettext_compile: {
             databio: {
                 files: {
-                    'land/translations.js': [__dirname + "/*.po"]
+                    'land/translations.js': ["land/merged.po"]
                 }
             },
         },

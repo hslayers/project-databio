@@ -16,7 +16,7 @@ if (typeof require != 'undefined') {
             app: 'app',
             core: hsl_path + 'components/core/core',
             api: hsl_path + 'components/api/api',
-            translations: hsl_path + 'components/translations/js/translations',
+            translations: 'translations',
             hscesium: hsl_path + 'components/hscesium/hscesium'
         }
     });

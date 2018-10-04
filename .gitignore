@@ -1,4 +1,5 @@
 node_modules
 *.mo
-bundle.js
-bundle.min.js
+merged.po
+land/bundle.js
+land/bundle.min.js
