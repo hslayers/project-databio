@@ -1,12 +1,13 @@
 'use strict';
 
-define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water', 'soils', 'water_bodies', 'parcels_with_id', 'erosion_zones', 'parcels_with_CTVDPB', 'parcels_with_crop_types', 'parcels_with_crop_types_by_distance', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap', 'angular-gettext', 'translations_extended'],
+define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water', 'soils', 'water_bodies', 'parcels_with_id', 'erosion_zones', 'parcels_with_CTVDPB', 'parcels_with_crop_types', 'parcels_with_crop_types_by_distance', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap', 'angular-gettext', 'translations_extended', 'language'],
 
-    function(ol, toolbar, sentinel, layermanager, pois, parcels_near_water, soils, water_bodies, parcels_with_id, erosion_zones, parcels_with_CTVDPB, parcels_with_crop_types, parcels_with_crop_types_by_distance) {
+    function(ol, toolbar, sentinel, layermanager, pois, parcels_near_water, soils, water_bodies, parcels_with_id, erosion_zones, parcels_with_CTVDPB, parcels_with_crop_types, parcels_with_crop_types_by_distance, language) {
         var module = angular.module('hs', [
             'hs.toolbar',
             'hs.layermanager',
             'hs.query',
+            'hs.language',
             'hs.search', 'hs.print', 'hs.permalink',
             'hs.datasource_selector',
             'hs.geolocation',
