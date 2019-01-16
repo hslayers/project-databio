@@ -292,18 +292,9 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
         });
 
         module.value('config', {
+            cesiumAccessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzZDk3ZmM0Mi01ZGFjLTRmYjQtYmFkNC02NTUwOTFhZjNlZjMiLCJpZCI6MTE2MSwiaWF0IjoxNTI3MTYxOTc5fQ.tOVBzBJjR3mwO3osvDVB_RwxyLX7W-emymTOkfz6yGA',
             cesiumTimeline: true,
             cesiumAnimation: true,
-            terrain_provider: 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
-            terrain_providers: [{
-                title: 'Local terrain',
-                url: 'http://gis.lesprojekt.cz/cts/tilesets/rostenice_dmp1g/',
-                active: false
-            }, {
-                title: 'EU-DEM',
-                url: 'https://assets.agi.com/stk-terrain/v1/tilesets/world/tiles',
-                active: true
-            }],
             default_layers: layers,
             project_name: 'erra/map',
             hostname: {
@@ -320,8 +311,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
             default_view: new ol.View({
                 center: ol.proj.transform([1208534.8815206578, 5761821.705531779], 'EPSG:3857', 'EPSG:4326'),
                 zoom: 5,
-                units: "m",
-                projection: 'EPSG:4326'
+                units: "m"
             })
         });
 
