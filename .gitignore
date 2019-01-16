@@ -4,4 +4,5 @@ merged.po
 land/bundle.js
 land/bundle.min.js
 land/translations_extended.js
-
+water/bundle.js
+water/bundle.min.js
