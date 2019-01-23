@@ -107,7 +107,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                 },
                 crossOrigin: null
             }),
-            legends: [`http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/copernicus_marine.map?REQUEST=GetLegendGraphic&LAYER=temperature`],
+            legends: [`http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/copernicus_marine.map&REQUEST=GetLegendGraphic&LAYER=temperature`],
             visible: true,
             opacity: 0.7,
         }));
@@ -141,7 +141,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                                     values: ['BE', 'CN', 'DE', 'DK', 'EE', 'ES', 'FI', 'FO', 'FR', 'GB', 'GG', 'GL', 'IE', 'IM', 'IS', 'JE', 'JP', 'KR', 'LT', 'LV', 'LY', 'NL', 'NO', 'PL', 'PT', 'RU', 'SE', 'TW']
                                 }*/
             },
-            legends: [`http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/copernicus_marine.map?REQUEST=GetLegendGraphic&LAYER=temperature`],
+            legends: [`http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map&REQUEST=GetLegendGraphic&LAYER=composition`],
             visible: true,
             opacity: 0.7,
         }));
