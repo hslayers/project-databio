@@ -148,11 +148,11 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
 
 
         layers.push(new ol.layer.Image({
-            title: 'code_catches (2016-2017), year, amount and distance',
+            title: 'Cod catches (2016-2017), year, amount and distance',
             source: new ol.source.ImageWMS({
                 url: 'http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map',
                 params: {
-                    LAYERS: 'code_catches_distance',
+                    LAYERS: 'cod_catches_distance',
                     VERSION: '1.3.0',
                     FORMAT: "image/png",
                     INFO_FORMAT: "text/html",
