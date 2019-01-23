@@ -94,6 +94,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                         }),*/
         ];
 
+        var catchesTimeSteps = prepareTimeSteps('2016-01-01T12:00:00.000Z/2017-01-01T12:00:00.000Z/PT24H');
         layers.push(new ol.layer.Image({
             title: 'Latest temperature',
             source: new ol.source.ImageWMS({
@@ -106,6 +107,40 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                 },
                 crossOrigin: null
             }),
+            legends: [`http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/copernicus_marine.map?REQUEST=GetLegendGraphic&LAYER=temperature`],
+            visible: true,
+            opacity: 0.7,
+        }));
+        layers.push(new ol.layer.Image({
+            title: 'Catches',
+            source: new ol.source.ImageWMS({
+                url: 'http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map',
+                params: {
+                    LAYERS: 'composition',
+                    VERSION: '1.3.0',
+                    FORMAT: "image/png",
+                    INFO_FORMAT: "text/html",
+                    time: catchesTimeSteps[catchesTimeSteps.length - 1].toISOString(),
+                },
+                crossOrigin: null
+            }),
+            dimensions: {
+                time: {
+                    name: 'time',
+                    values: catchesTimeSteps
+                }
+                /*,
+                                species: {
+                                    name: 'species',
+                                    label: 'Fish species',
+                                    values: ['ANF', 'BIB', 'BLL', 'BRB', 'BSS', 'CAA', 'CAR', 'CLU', 'CLX', 'CNZ', 'COC', 'COD', 'COE', 'CRE', 'CRU', 'CSH', 'CTC', 'DAB', 'DGH', 'DGS', 'DGZ', 'DIA', 'DPX', 'ELE', 'FIN', 'FLE', 'GAD', 'GAG', 'GUG', 'GUR', 'GUU', 'GUX', 'HAD', 'HAL', 'HER', 'HKE', 'HOM', 'INV', 'JAX', 'JOD', 'LBE', 'LEM', 'LEZ', 'LIN', 'MAC', 'MEB', 'MEG', 'MGC', 'MNZ', 'MOL', 'MUR', 'MUS', 'MZZ', 'NEP', 'OCZ', 'OYF', 'PEE', 'PIL', 'PLE', 'POK', 'POL', 'POR', 'PPX', 'RED', 'RJB', 'RJC', 'RJE', 'RJH', 'RJI', 'RJM', 'RJN', 'RJR', 'RJU', 'SBX', 'SCE', 'SCL', 'SCR', 'SDV', 'SKA', 'SKH', 'SMD', 'SOL', 'SOS', 'SPR', 'SQC', 'SQZ', 'STU', 'SYC', 'SYT', 'TUR', 'USK', 'WEG', 'WHE', 'WHG', 'WIT', 'WRA', 'ALB', 'BET', 'BFT', 'BSH', 'SAI', 'SWO', 'TUX', 'YFT', 'AES', 'ALC', 'ANE', 'APO', 'ARG', 'ARU', 'ARY', 'BLI', 'BON', 'BOR', 'BSF', 'CAB', 'CAP', 'CAS', 'CAT', 'CMO', 'COA', 'CRA', 'CYO', 'DGX', 'ELP', 'FBR', 'FBU', 'FCC', 'FCP', 'FID', 'FLX', 'FPE', 'FPI', 'FPP', 'FRF', 'FRO', 'FTE', 'GAR', 'GFB', 'GHL', 'GRC', 'GRO', 'GUQ', 'KEF', 'LEF', 'LUM', 'MON', 'MSX', 'MUL', 'MUX', 'NOP', 'ORY', 'PEL', 'PLA', 'PLN', 'PRA', 'RNG', 'SAL', 'SAN', 'SBR', 'SCB', 'SCK', 'SFS', 'SHD', 'SIX', 'SME', 'SQI', 'SQR', 'SQU', 'SRA', 'SRX', 'SSD', 'STB', 'TRO', 'TRS', 'VMA', 'WHB', 'AAS', 'ABK', 'AFT', 'BLE', 'BLF', 'CEP', 'CLQ', 'CPR', 'CRN', 'CTL', 'ELZ', 'FAC', 'FBM', 'FRS', 'GAS', 'GDG', 'GOB', 'GPA', 'GTA', 'HOU', 'KCS', 'KCT', 'MYG', 'NKR', 'OOA', 'PER', 'POA', 'POC', 'POD', 'QSC', 'RBO', 'REB', 'REG', 'SCO', 'SCU', 'SCX', 'SKB', 'SSI', 'STF', 'STH', 'SVE', 'THS', 'TRR', 'TSD', 'ULO', 'URS', 'URX', 'USB', 'VSP', 'WHX', 'ABZ', 'ACC', 'AGN', 'ALR', 'APU', 'CFB', 'CGO', 'CYP', 'ERO', 'FCY', 'FIE', 'FKU', 'GSK', 'HKW', 'LAR', 'LAS', 'LAU', 'LUH', 'NBU', 'RAJ', 'RHG', 'SHL', 'SRE', 'SWR', 'TGQ', 'VIV', 'AKJ', 'ALF', 'ALM', 'ALV', 'AMB', 'AMX', 'ANK', 'ANN', 'API', 'ARI', 'ASD', 'ASK', 'ATB', 'ATP', 'BAR', 'BAS', 'BBS', 'BDL', 'BEN', 'BGR', 'BHD', 'BHY', 'BIL', 'BLB', 'BLT', 'BLU', 'BOC', 'BOG', 'BOY', 'BPI', 'BRF', 'BRI', 'BRO', 'BRT', 'BRX', 'BSC', 'BSE', 'BSX', 'BTH', 'BUM', 'BUX', 'BXD', 'BYS', 'BZX', 'CBC', 'CBM', 'CBR', 'CCT', 'CDX', 'CEN', 'CEO', 'CET', 'CGX', 'CIL', 'CKL', 'CLS', 'CLV', 'CMK', 'COB', 'COR', 'COU', 'COX', 'CPL', 'CRG', 'CRS', 'CRW', 'CTB', 'CTG', 'CTS', 'CTZ', 'CUT', 'CUX', 'CVJ', 'DCA', 'DCP', 'DEC', 'DEL', 'DEM', 'DEP', 'DEX', 'DIN', 'DOL', 'DON', 'DPS', 'DSX', 'DXL', 'DYL', 'EAG', 'ECE', 'ECH', 'EFJ', 'EJE', 'ELX', 'EOI', 'EPI', 'EQE', 'EQI', 'ETR', 'ETX', 'EZS', 'FAL', 'FAV', 'FIM', 'FLY', 'FOR', 'FOX', 'FRI', 'FRZ', 'FUA', 'GAM', 'GAU', 'GBF', 'GBN', 'GBR', 'GEL', 'GEP', 'GER', 'GEY', 'GGD', 'GGU', 'GGY', 'GKL', 'GLI', 'GOO', 'GPD', 'GPW', 'GPX', 'GRX', 'GSM', 'GUI', 'GUM', 'GUN', 'GUP', 'GUY', 'HDR', 'HLT', 'HLZ', 'HMM', 'HMY', 'HOL', 'HPR', 'HXT', 'IAR', 'IAX', 'IOD', 'ISC', 'ITW', 'JAA', 'JAR', 'JBA', 'JCN', 'JCR', 'JCX', 'JDP', 'JFV', 'JOS', 'JRS', 'JUX', 'KCX', 'KCZ', 'KLK', 'KTG', 'KTT', 'KYX', 'LAG', 'LAZ', 'LBS', 'LCM', 'LDB', 'LDS', 'LDV', 'LEC', 'LEE', 'LHT', 'LIL', 'LIM', 'LIO', 'LIT', 'LNZ', 'LOQ', 'LOS', 'LOX', 'LPS', 'LPZ', 'LQA', 'LTA', 'LYY', 'MAK', 'MAT', 'MAX', 'MAZ', 'MGA', 'MGR', 'MGS', 'MIA', 'MKG', 'MLR', 'MMH', 'MNE', 'MOR', 'MOX', 'MQL', 'MSF', 'MSK', 'MSM', 'MTC', 'MTS', 'MUE', 'MUF', 'MUI', 'MUM', 'MUT', 'MYL', 'NEX', 'NOW', 'NUQ', 'OCC', 'OCM', 'OCT', 'OFJ', 'OFN', 'OGT', 'OIL', 'OMM', 'OMZ', 'OUL', 'OUM', 'OUW', 'OXN', 'OYC', 'OYG', 'PAC', 'PAL', 'PAN', 'PAX', 'PCB', 'PDZ', 'PEN', 'PEZ', 'PIC', 'PLZ', 'PNQ', 'PNV', 'POI', 'POX', 'PRC', 'PRI', 'PRR', 'PSL', 'PUX', 'QPX', 'QTV', 'QUB', 'RAE', 'RAT', 'RAZ', 'RIB', 'RJA', 'RJF', 'RJG', 'RJK', 'RJO', 'RJY', 'RMM', 'RNH', 'ROL', 'RPG', 'RSE', 'RSK', 'SAU', 'SAX', 'SBA', 'SBB', 'SBG', 'SBL', 'SBN', 'SBP', 'SBS', 'SBZ', 'SCF', 'SCS', 'SCY', 'SDH', 'SDS', 'SDU', 'SHB', 'SHO', 'SHX', 'SIL', 'SKJ', 'SKX', 'SLI', 'SLM', 'SLO', 'SLX', 'SMA', 'SNA', 'SNQ', 'SNS', 'SOI', 'SOO', 'SOR', 'SOX', 'SPL', 'SPN', 'SPU', 'SPX', 'SPZ', 'SQE', 'SQM', 'SQY', 'SRG', 'SRJ', 'SRK', 'SRR', 'SSB', 'SSX', 'STI', 'STT', 'STW', 'SWA', 'SWB', 'SWG', 'SWM', 'SWX', 'SYR', 'SYX', 'TCW', 'TDQ', 'TGS', 'THR', 'TIG', 'TJX', 'TOD', 'TOE', 'TPA', 'TQF', 'TRA', 'TRC', 'TRE', 'TRG', 'TRI', 'TRK', 'TRP', 'TRQ', 'TRZ', 'TSU', 'TTR', 'TUN', 'TVY', 'TZY', 'UBS', 'UCA', 'UDP', 'URM', 'USI', 'UUC', 'VAD', 'VEV', 'VLO', 'VNA', 'VNR', 'VSC', 'WAH', 'WEX', 'WHM', 'WOR', 'WRF', 'WRM', 'WSA', 'XOD', 'YFC', 'YFM', 'YFX', 'YNU', 'YRS', 'ZEX', 'ZGP', 'FVE', 'DEA', 'LAX', 'MAV', 'MCA', 'ALK', 'ANG', 'ANT', 'APL', 'ASN', 'ATG', 'BAH', 'BIS', 'BLM', 'BSK', 'CLH', 'CLJ', 'CLP', 'COL', 'COW', 'COZ', 'DCX', 'DOR', 'FLW', 'FMS', 'FUU', 'FUV', 'FYS', 'GEQ', 'GRV', 'HCX', 'HKS', 'HYD', 'ILL', 'IMS', 'JAD', 'KDF', 'KFA', 'KGX', 'KUP', 'LAH', 'LEP', 'LOY', 'LQD', 'LQX', 'LRL', 'LZS', 'MAM', 'MLS', 'MYV', 'OAL', 'ODL', 'OLV', 'OSG', 'OST', 'OYX', 'PIQ', 'PLS', 'PNB', 'RBF', 'RHP', 'SAA', 'SCA', 'SFA', 'SHR', 'SHZ', 'SJA', 'SLS', 'SLZ', 'SNK', 'SPC', 'SQA', 'SSG', 'SSP', 'SWP', 'SWQ', 'TDS', 'TLD', 'TOM', 'TPS', 'TUS', 'TWL', 'UCU', 'ULV', 'UVU', 'WHA', 'WSH', 'YEL', 'APQ', 'BER', 'CAX', 'CDL', 'CMM', 'CRB', 'CRR', 'CYH', 'CYY', 'EEO', 'MOP', 'NEC', 'PHO', 'RCT', 'SAE', 'STC', 'TOP', 'TTO', 'URC', 'CRQ', 'ABX', 'APH', 'BES', 'BRA', 'BSD', 'CGZ', 'CLB', 'CLE', 'CRV', 'CXF', 'FAM', 'GDE', 'HKX', 'HNG', 'JAT', 'LMG', 'LMZ', 'NZA', 'RFT', 'SBF', 'SFV', 'SMP', 'SQL', 'SQS', 'SSM', 'MJW', 'RHC', 'ASU', 'FSC', 'GRA', 'HKR', 'HMZ', 'PCR', 'WHF', 'GMG', 'MXV', 'BSB', 'BUA', 'DEN', 'DUS', 'ERS', 'FCG', 'GOA', 'LOD', 'SQF', 'TOZ', 'ACH', 'CHR', 'CUS', 'ENX', 'JCM', 'KCD', 'MOD', 'TBR', 'TOA', 'ENC', 'SCP', 'SOM', 'AGD', 'AGK', 'AHN', 'AKL', 'ALE', 'ARA', 'ARS', 'ARV', 'AUU', 'AWM', 'BBH', 'BDY', 'BGX', 'BOA', 'BOP', 'BRD', 'BUR', 'BVV', 'CAL', 'CCL', 'CCP', 'CDZ', 'CEM', 'CEX', 'CKW', 'COM', 'CWZ', 'DRS', 'EDT', 'EHI', 'EIK', 'FRL', 'FRX', 'GIT', 'GPB', 'GRB', 'GSQ', 'GUZ', 'HDV', 'HKB', 'HKK', 'HKM', 'HKN', 'HKO', 'HKP', 'HNQ', 'HQM', 'HTU', 'ILI', 'JAI', 'JRW', 'KCB', 'KCP', 'KRJ', 'KYP', 'KYS', 'LKT', 'LKW', 'LMA', 'LQY', 'LVC', 'MDO', 'MDZ', 'MFZ', 'MKF', 'MKU', 'MPN', 'MSP', 'NAU', 'OBN', 'OCS', 'OUB', 'OXY', 'PAR', 'PAU', 'PEW', 'PNI', 'POP', 'POS', 'PRP', 'PSB', 'PSK', 'PSS', 'PVR', 'PXV', 'QPH', 'RCW', 'RDC', 'REA', 'RGL', 'RTX', 'RUB', 'RXY', 'SAO', 'SDR', 'SNI', 'SOC', 'SOP', 'SOT', 'SPF', 'SRQ', 'SSA', 'SSH', 'STG', 'SUT', 'TDF', 'THF', 'TMP', 'TOX', 'TRB', 'URA', 'XKX', 'YLL', 'YOI', 'YOX', 'YTC', 'YTL', 'BUT', 'EMM', 'EOG', 'HEP', 'KIM', 'LXX', 'PIN', 'SMR', 'EEL', 'TAS', 'TLV', 'ULT']
+                                },
+                                country: {
+                                    name: 'country',
+                                    label: 'Country',
+                                    values: ['BE', 'CN', 'DE', 'DK', 'EE', 'ES', 'FI', 'FO', 'FR', 'GB', 'GG', 'GL', 'IE', 'IM', 'IS', 'JE', 'JP', 'KR', 'LT', 'LV', 'LY', 'NL', 'NO', 'PL', 'PT', 'RU', 'SE', 'TW']
+                                }*/
+            },
             legends: [`http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/copernicus_marine.map?REQUEST=GetLegendGraphic&LAYER=temperature`],
             visible: true,
             opacity: 0.7,
