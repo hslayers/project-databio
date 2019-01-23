@@ -142,7 +142,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                                 }*/
             },
             legends: [`http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map&REQUEST=GetLegendGraphic&LAYER=composition`],
-            visible: true,
+            visible: false,
             opacity: 0.7,
         }));
 
@@ -168,7 +168,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
             },
             legends: [`http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map&REQUEST=GetLegendGraphic&LAYER=code_catches_distance`],
             visible: true,
-            opacity: 0.7,
+            opacity: 0.9,
         }));
 
         var caps = $.ajax({
