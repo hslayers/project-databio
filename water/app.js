@@ -155,8 +155,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                     LAYERS: 'cod_catches_distance',
                     VERSION: '1.3.0',
                     FORMAT: "image/png",
-                    INFO_FORMAT: "text/html",
-                    time: catchesTimeSteps[catchesTimeSteps.length - 1].toISOString(),
+                    INFO_FORMAT: "text/html"
                 },
                 crossOrigin: null
             }),
@@ -175,7 +174,6 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                         VERSION: '1.3.0',
                         FORMAT: "image/png",
                         INFO_FORMAT: "text/html",
-                        time: catchesTimeSteps[catchesTimeSteps.length - 1].toISOString(),
                     },
                     crossOrigin: null
                 }),
