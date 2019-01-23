@@ -160,16 +160,30 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                 },
                 crossOrigin: null
             }),
-            dimensions: {
-                time: {
-                    name: 'time',
-                    values: catchesTimeSteps
-                }
-            },
             legends: [`http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map&REQUEST=GetLegendGraphic&LAYER=code_catches_distance`],
-            visible: true,
+            visible: false,
             opacity: 0.9,
         }));
+
+        angular.forEach(['in_winter', 'in_summer', 'in_spring', 'in_autumn'], function(lyr) {
+            layers.push(new ol.layer.Image({
+                title: 'Cod catches ' + lyr + ', year, amount and distance',
+                source: new ol.source.ImageWMS({
+                    url: 'http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map',
+                    params: {
+                        LAYERS: lyr,
+                        VERSION: '1.3.0',
+                        FORMAT: "image/png",
+                        INFO_FORMAT: "text/html",
+                        time: catchesTimeSteps[catchesTimeSteps.length - 1].toISOString(),
+                    },
+                    crossOrigin: null
+                }),
+                legends: [`http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map&REQUEST=GetLegendGraphic&LAYER=code_catches_distance`],
+                visible: false,
+                opacity: 0.9,
+            }));
+        })
 
         var caps = $.ajax({
             type: "GET",
