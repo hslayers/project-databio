@@ -344,7 +344,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
             'compositions_catalogue_url': "/php/metadata/csw",
             status_manager_url: '/wwwlibs/statusmanager2/index.php',
             default_view: new ol.View({
-                center: ol.proj.transform([1208534.8815206578, 5761821.705531779], 'EPSG:3857', 'EPSG:4326'),
+                center: [2627959.3498800094, 14587004.698994633],
                 zoom: 5,
                 units: "m"
             })
