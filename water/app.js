@@ -94,7 +94,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                         }),*/
         ];
 
-        var catchesTimeSteps = prepareTimeSteps('2016-01-01T12:00:00.000Z/2017-01-01T12:00:00.000Z/PT24H');
+        var catchesTimeSteps = prepareTimeSteps('2016-01-01T12:00:00.000Z/2018-01-01T12:00:00.000Z/PT24H');
         layers.push(new ol.layer.Image({
             title: 'Latest temperature',
             source: new ol.source.ImageWMS({
@@ -142,6 +142,31 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                                 }*/
             },
             legends: [`http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map&REQUEST=GetLegendGraphic&LAYER=composition`],
+            visible: true,
+            opacity: 0.7,
+        }));
+
+
+        layers.push(new ol.layer.Image({
+            title: 'code_catches (2016-2017), year, amount and distance',
+            source: new ol.source.ImageWMS({
+                url: 'http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map',
+                params: {
+                    LAYERS: 'code_catches_distance',
+                    VERSION: '1.3.0',
+                    FORMAT: "image/png",
+                    INFO_FORMAT: "text/html",
+                    time: catchesTimeSteps[catchesTimeSteps.length - 1].toISOString(),
+                },
+                crossOrigin: null
+            }),
+            dimensions: {
+                time: {
+                    name: 'time',
+                    values: catchesTimeSteps
+                }
+            },
+            legends: [`http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map&REQUEST=GetLegendGraphic&LAYER=code_catches_distance`],
             visible: true,
             opacity: 0.7,
         }));
