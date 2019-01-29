@@ -18,7 +18,7 @@
     "protractor": "protractor test/protractor-conf.js"
   },
   "dependencies": {
-    "cesium": "1.43.0",
+    "cesium": "1.53.0",
     "jquery": "^3.3.1",
     "requirejs": "^2.3.5"
   },
