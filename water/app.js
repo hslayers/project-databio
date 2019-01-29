@@ -1,6 +1,6 @@
 'use strict';
 
-define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap'],
+define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap.bundle'],
 
     function(ol, toolbar, momentinterval, moment, layermanagergeojson) {
         var module = angular.module('hs', [
@@ -364,6 +364,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
         });
 
         module.value('config', {
+            cesiumBase: '../node_modules/cesium/Build/Cesium/',
             cesiumAccessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzZDk3ZmM0Mi01ZGFjLTRmYjQtYmFkNC02NTUwOTFhZjNlZjMiLCJpZCI6MTE2MSwiaWF0IjoxNTI3MTYxOTc5fQ.tOVBzBJjR3mwO3osvDVB_RwxyLX7W-emymTOkfz6yGA',
             cesiumTimeline: true,
             cesiumAnimation: true,
