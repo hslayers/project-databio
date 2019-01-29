@@ -29,12 +29,12 @@
             padding: 2px;
         }
 
-        .hud .well {
+        .hud .card {
             padding: 0px;
             margin: 3px
         }
     </style>
-    <div class="well layerlist">
+    <div class="card layerlist">
         <table class="table table-condensed">
             <tr ng-repeat="time_layer in time_layers">
                 <td>{{time_layer.name}}</td>
@@ -43,7 +43,7 @@
         </table>
     </div>
 
-    <div class="well controls">
+    <div class="card controls">
         <form class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-6 control-label">Depth</label>
