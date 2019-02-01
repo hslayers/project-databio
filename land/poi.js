@@ -26,9 +26,9 @@ define(['ol'],
                 s = s.split("#")[1];
                 var allowed = 'archaeological_site.png  artwork.png  bank.png      cafe.png       car_wash.png  fast_food.png  hotel.png        library.png   other.png    place_of_worship.png  restaurant.png   viewpoint.png     zoo.png arts_centre.png          atm.png      bus_stop.png  camp_site.png  dentist.png   fountain.png   information.png  memorial.png  parking.png  pub.png              supermarket.png  waste_basket.png';
                 if (allowed.indexOf(s + '.png') > -1)
-                    s = '../foodie-zones/symbols/' + s + '.png';
+                    s = 'symbols/' + s + '.png';
                 else
-                    s = '../foodie-zones/symbols/other.png';
+                    s = 'symbols/other.png';
                 entity.billboard.scaleByDistance = new Cesium.NearFarScalar(50, 1.5, 15000, 0.0);
                 entity.billboard.image = s;
                 switch (entity.properties.category.getValue()) {
@@ -85,7 +85,6 @@ define(['ol'],
                 WHERE {?poi geo:asWKT ?wkt . 
                     FILTER(bif:st_intersects(bif:st_geomfromtext("${extents}"), ?wkt)).
                     ?poi <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?sub. 
-                    ?sub <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?categ.
                     ?poi <http://www.w3.org/2000/01/rdf-schema#label> ?label
                 }`) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
 
