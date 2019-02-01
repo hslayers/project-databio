@@ -143,7 +143,7 @@ define(['ol', 'sparql_helpers'],
                 ORDER BY ?cropName
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                 $.ajax({
-                        url: utils.proxify(q)
+                        url: q
                     })
                     .done(function(response) {
                         $scope.cropTypes = response.results.bindings.map(function(r) {

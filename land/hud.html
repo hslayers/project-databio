@@ -13,6 +13,7 @@
         .hud .card {
             padding: 5px;
         }
+        #accordion .card-header {padding: 0.25rem 1.25rem;}
     </style>
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
         aria-controls="collapseExample" translate>
@@ -22,16 +23,14 @@
         <div class="card controls">
             <form class="form-inline">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" translate>
-                                    Filter fields which are near water
-                                </a>
-                            </h4>
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingOne">
+                            <button class="btn btn-link" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" translate>
+                                Filter fields which are near water
+                            </button>
                         </div>
-                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body">
+                        <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label" translate>Distance to water bodies in km</label>
                                     <div class="input-group">
@@ -44,17 +43,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingTwo">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingTwo">
+                            <button class="btn btn-link" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
                                     aria-controls="collapseTwo" translate>
                                     Land usage for fields with LPIS ID
-                                </a>
-                            </h4>
+                            </button>
                         </div>
-                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                            <div class="panel-body">
+                        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label" translate>ID Uz</label>
                                     <div class="input-group">
@@ -67,17 +64,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingThree">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingThree">
+                            <button class="btn btn-link" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
                                     aria-controls="collapseThree" translate>
                                     Crop types for fields with CTVDPB code
-                                </a>
-                            </h4>
+                            </button>
                         </div>
-                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                            <div class="panel-body">
+                        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label" translate>CTVDPB</label>
                                     <div class="input-group">
@@ -90,17 +85,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingEight">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false"
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingEight">
+                                <button class="btn btn-link" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEight" aria-expanded="false"
                                     aria-controls="collapseEight" translate>
                                     Crop types for fields with LPIS ID
-                                </a>
-                            </h4>
+                            </button>
                         </div>
-                        <div id="collapseEight" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEight">
-                            <div class="panel-body">
+                        <div id="collapseEight" class="collapse" role="tabpanel" aria-labelledby="headingEight">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label" translate>ID</label>
                                     <div class="input-group">
@@ -113,17 +106,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingFour">
-                            <h4 class="panel-title">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingFour">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"
                                     aria-controls="collapseFour" translate>
                                     Find fields with crop type in area
                                 </a>
-                            </h4>
                         </div>
-                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                            <div class="panel-body">
+                        <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label" translate>Crop type</label>
                                     <div class="input-group">
@@ -138,17 +129,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingFive">
-                            <h4 class="panel-title">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingFive">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false"
                                     aria-controls="collapseFive" translate>
                                     Filter fields by crop and distance to map center
                                 </a>
-                            </h4>
                         </div>
-                        <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
-                            <div class="panel-body">
+                        <div id="collapseFive" class="collapse" role="tabpanel" aria-labelledby="headingFive">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label" translate>Crop type</label>
                                     <select class="form-control" ng-model="cropType">
@@ -167,17 +156,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingSix">
-                            <h4 class="panel-title">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingSix">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
                                     aria-controls="collapseSix" translate>
                                     Find erosion zones
                                 </a>
-                            </h4>
                         </div>
-                        <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
-                            <div class="panel-body">
+                        <div id="collapseSix" class="collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label" translate>LPIS FARM ID (ID_UZ)</label>
                                     <div class="input-group">
@@ -199,17 +186,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingSeven">
-                            <h4 class="panel-title">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingSeven">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false"
                                     aria-controls="collapseSeven" translate>
                                     Filter fields by soil type in area
                                 </a>
-                            </h4>
                         </div>
-                        <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
-                            <div class="panel-body">
+                        <div id="collapseSeven" class="collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="card-body">
                                 <div class="form-group">
                                     <label class="control-label" translate>Soil type</label>
                                     <div class="input-group">

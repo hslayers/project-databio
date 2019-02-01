@@ -79,7 +79,7 @@ define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water'
                         };
                         var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('describe <' + attrs.url + '>') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                         $.ajax({
-                                url: utils.proxify(q)
+                                url: q
                             })
                             .done(function(response) {
                                 if (angular.isUndefined(response.results)) return;
@@ -108,6 +108,7 @@ define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water'
         };
 
         module.value('config', {
+            cesiumBase: '../node_modules/cesium/Build/Cesium/',
             default_layers: [
                 new ol.layer.Tile({
                     source: new ol.source.OSM(),
@@ -311,7 +312,7 @@ define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water'
                 function describeOlu(id, callback) {
                     var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('describe <' + id + '>') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                     $.ajax({
-                            url: utils.proxify(q)
+                            url: q
                         })
                         .done(function(response) {
                             if (angular.isUndefined(response.results)) return;
@@ -332,7 +333,7 @@ define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water'
                 function getLinksTo(id, callback) {
                     var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent('PREFIX geo: <http://www.opengis.net/ont/geosparql#> PREFIX geof: <http://www.opengis.net/def/function/geosparql/> PREFIX virtrdf: <http://www.openlinksw.com/schemas/virtrdf#> PREFIX poi: <http://www.openvoc.eu/poi#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT * WHERE {?obj <http://www.opengis.net/ont/geosparql#hasGeometry> ?obj_geom. ?obj_geom geo:asWKT ?Coordinates . FILTER(bif:st_intersects (?Coordinates, ?wkt)). { SELECT ?wkt WHERE { <' + id + '> geo:hasGeometry ?geometry. ?geometry geo:asWKT ?wkt.} } }') + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                     $.ajax({
-                            url: utils.proxify(q)
+                            url: q
                         })
                         .done(function(response) {
                             for (var i = 0; i < response.results.bindings.length; i++) {

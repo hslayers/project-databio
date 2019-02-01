@@ -9,13 +9,13 @@ define(['angular', 'ol', 'map', 'core'],
 
             .directive('hs.sentinel.directive', function() {
                 return {
-                    templateUrl: hsl_path + 'examples/databio/sentineldirective.html?bust=' + gitsha
+                    templateUrl: 'sentineldirective.html?bust=' + gitsha
                 };
             })
 
             .directive('hs.sentinel.toolbar', function() {
                 return {
-                    templateUrl: hsl_path + 'examples/databio/sentineltoolbar.html?bust=' + gitsha
+                    templateUrl: 'sentineltoolbar.html?bust=' + gitsha
                 };
             })
 

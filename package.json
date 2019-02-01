@@ -25,6 +25,7 @@
   "devDependencies": {
     "angular-jsdoc": "^1.5.0",
     "browserify": "^16.2.0",
+    "exposify": "^0.5.0",
     "grunt": "^1.0.2",
     "grunt-angular-gettext": "^2.3.2",
     "grunt-contrib-uglify": "^3.3.0",

@@ -147,7 +147,7 @@ define(['ol', 'sparql_helpers'],
                 
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                 $.ajax({
-                        url: utils.proxify(q)
+                        url: q
                     })
                     .done(function(response) {
                         $scope.soilTypes = response.results.bindings.map(function(r) {

@@ -91,7 +91,7 @@ define(['ol'],
 
                 spoi_source.set('loaded', false);
                 $.ajax({
-                        url: utils.proxify(q)
+                        url: q
                     })
                     .done(function(response) {
                         if (angular.isUndefined(response.results)) return;
