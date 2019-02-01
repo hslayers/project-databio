@@ -54,7 +54,7 @@ define(['angular', 'ol', 'map', 'core'],
                                 for (var i = 0; i < entities.length; i++) {
                                     var entity = entities[i];
                                     if (entity.styled) continue;
-                                    entity.billboard.image = '../foodie-zones/symbols/other.png';
+                                    entity.billboard.image = './symbols/other.png';
                                     entity.billboard.eyeOffset = new Cesium.Cartesian3(0.0, 0.0, -100.0);
                                     entity.label = new Cesium.LabelGraphics({
                                         text: entity.properties.ix.getValue().toString(),
