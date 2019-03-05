@@ -241,6 +241,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
                 palette: 'rainbow'
             }
         ], function(def) {
+            if(caps.indexOf('not found') > -1) return;
             var timeInterval = $("Layer Name:contains('" + def.layer + "')", caps).parent().find('Dimension[name="time"]').html();
             var timeSteps = prepareTimeSteps(timeInterval);
             var elevations;
@@ -334,6 +335,7 @@ define(['ol', 'toolbar', 'moment-interval', 'moment', 'layermanager', 'sidebar',
             }
 
         ], function(def) {
+            if(caps.indexOf('not found') > -1) return;
             var timeInterval = $("Layer Name:contains('" + def.layer + "')", caps).parent().find('Dimension[name="time"]').html();
             var timeSteps = prepareTimeSteps(timeInterval);
             layers.push(new ol.layer.Image({
