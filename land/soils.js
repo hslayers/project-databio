@@ -127,23 +127,23 @@ define(['ol', 'sparql_helpers'],
                 return lyr;
             },
             fillClassificators() {
-                var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent(`PREFIX foodie-cz: <http://foodie-cloud.com/model/foodie-cz#>
-                PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+                var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent(`PREFIX geo: <http://www.opengis.net/ont/geosparql#>
                 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
                 PREFIX virtrdf:	<http://www.openlinksw.com/schemas/virtrdf#> 
                 PREFIX poi: <http://www.openvoc.eu/poi#> 
                 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                PREFIX foodie-cz: <http://foodie-cloud.com/model/foodie-cz#>
                 PREFIX foodie: <http://foodie-cloud.com/model/foodie#>
                 PREFIX olu: <http://w3id.org/foodie/olu#>
                 PREFIX common: <http://portele.de/ont/inspire/baseInspire#>
+                PREFIX soilType: <http://foodie-cloud.com/model/foodie/code/PropertyTypeValue/soilType>
                 
-                SELECT DISTINCT ?label
+                SELECT ?name 
                 FROM <http://w3id.org/foodie/open/cz/Soil_maps_BPEJ_WGSc#>
                 WHERE {
-                    ?soil a foodie:Plot .
-                    optional {?soil rdfs:label ?label }.
-                }
+                ?s a foodie:PropertyType .
+                ?s foodie:propertyType soilType: .
+                ?s foodie:propertyName ?name
+                } 
                 
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                 $.ajax({
@@ -151,7 +151,7 @@ define(['ol', 'sparql_helpers'],
                     })
                     .done(function(response) {
                         $scope.soilTypes = response.results.bindings.map(function(r) {
-                            return r.label.value;
+                            return r.name.value;
                         })
                     })
             },
