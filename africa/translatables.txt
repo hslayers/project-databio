@@ -1,0 +1,2 @@
+cs_CZ.po 
+../../hslayers-ng/po/cs_CZ.po

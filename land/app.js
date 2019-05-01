@@ -1,8 +1,8 @@
 'use strict';
 
-define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water', 'parcels_near_region', 'soils', 'water_bodies', 'parcels_with_id', 'erosion_zones', 'parcels_with_CTVDPB', 'parcels_with_crop_types', 'parcels_with_crop_types_by_distance', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap.bundle', 'angular-gettext', 'translations_extended', 'language'],
+define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water', 'soils', 'water_bodies', 'parcels_with_id', 'erosion_zones', 'parcels_with_CTVDPB', 'parcels_with_crop_types', 'parcels_with_crop_types_by_distance', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap.bundle', 'angular-gettext', 'translations_extended', 'language'],
 
-    function(ol, toolbar, sentinel, layermanager, pois, parcels_near_water, parcels_near_region, soils, water_bodies, parcels_with_id, erosion_zones, parcels_with_CTVDPB, parcels_with_crop_types, parcels_with_crop_types_by_distance, language) {
+    function(ol, toolbar, sentinel, layermanager, pois, parcels_near_water, soils, water_bodies, parcels_with_id, erosion_zones, parcels_with_CTVDPB, parcels_with_crop_types, parcels_with_crop_types_by_distance, language) {
         var module = angular.module('hs', [
             'hs.toolbar',
             'hs.layermanager',
@@ -238,7 +238,6 @@ define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water'
                 registerProvider(parcels_with_crop_types_by_distance, false);
                 registerProvider(erosion_zones, false);
                 registerProvider(soils);
-                registerProvider(parcels_near_region);
 
                 $rootScope.$on('map.loaded', function() {
                     map = hs_map.map;
@@ -419,11 +418,6 @@ define(['ol', 'toolbar', 'sentinel', 'layermanager', 'poi', 'parcels_near_water'
                         parcels_with_crop_types_by_distance.getLayer().setVisible(true);
                         parcels_with_crop_types_by_distance.get(map, utils, $scope.crop_distance, hsCesium.HsCsCamera.getCameraCenterInLngLat());
                     }
-                }
-
-                $scope.reloadPlotsNearRegion = function() {
-                    parcels_near_region.getLayer().setVisible(true);
-                    parcels_near_region.get(map, utils, getViewport());
                 }
 
                 function getViewport() {

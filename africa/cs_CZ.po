@@ -1,0 +1,207 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.1.1\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"Language: cs_CZ\n"
+
+#: examples/databio/about.html:7
+msgid "About Databio pilot"
+msgstr "O Databio pilotu"
+
+#: examples/databio/hud.html:17
+msgid "Actions:"
+msgstr "Akce:"
+
+#: examples/databio/hud.html:191 examples/databio/hud.html:82
+msgid "CTVDPB"
+msgstr "CTVDPB"
+
+#: examples/databio/sentineldirective.html:26
+msgid "Clear"
+msgstr "Vymazat"
+
+#: examples/databio/about.html:5 examples/databio/info.html:5
+#: examples/databio/sentineldirective.html:5
+msgid "Close"
+msgstr "Zavřít"
+
+#: examples/databio/hud.html:128 examples/databio/hud.html:153
+msgid "Crop type"
+msgstr "Typ plodiny"
+
+#: examples/databio/hud.html:73
+msgid "Crop types for fields with CTVDPB code"
+msgstr "Typy plodin pro pole s CTVDPB kódem"
+
+#: examples/databio/hud.html:96
+msgid "Crop types for fields with LPIS ID"
+msgstr "Typy plodin pro pole s LPIS ID"
+
+#: examples/databio/hud.html:159
+msgid "Distance in km"
+msgstr "Vzdálenost v kilometrech"
+
+#: examples/databio/hud.html:36
+msgid "Distance to water bodies in km"
+msgstr "Vzdálenost k vodní ploše v kilometrech"
+
+#: examples/databio/sentineldirective.html:20
+msgid "EndUTC"
+msgstr "EndUTC"
+
+#: examples/databio/erosion_zones.js:146
+msgid "Erosion zones"
+msgstr "Erozní zóny"
+
+#: examples/databio/parcels_with_id.js:164
+msgid "Fields by ID_UZ attribute from LPIS db"
+msgstr "Pole s ID_UZ atributem z databáze LPIS"
+
+#: examples/databio/parcels_with_crop_types.js:103
+msgid "Fields by crop types"
+msgstr "Pole podle typu plodiny"
+
+#: examples/databio/parcels_with_crop_types_by_distance.js:103
+msgid "Fields by crop types and distance"
+msgstr "Pole podle typu plodiny a vzdálenosti"
+
+#: examples/databio/parcels_with_CTVDPB.js:84
+msgid "Fields filtered by CTVDPD code"
+msgstr "Pole filtrovaná podle CTVDPB kódu"
+
+#: examples/databio/soils.js:103
+msgid "Fields with soil type"
+msgstr "Pole s typem půdy"
+
+#: examples/databio/hud.html:109 examples/databio/hud.html:134
+#: examples/databio/hud.html:163 examples/databio/hud.html:195
+#: examples/databio/hud.html:220 examples/databio/hud.html:40
+#: examples/databio/hud.html:63 examples/databio/hud.html:86
+msgid "Filter"
+msgstr "Filtr"
+
+#: examples/databio/hud.html:144
+msgid "Filter fields by crop and distance to map center"
+msgstr "Filtrovat pole podle plodiny a vzdálenosti od středu mapy"
+
+#: examples/databio/hud.html:205
+msgid "Filter fields by soil type in area"
+msgstr "Filtrovat pole podle typu půdy v oblasti"
+
+#: examples/databio/hud.html:28
+msgid "Filter fields which are near water"
+msgstr "Vybrat pole blízko vody"
+
+#: examples/databio/hud.html:173
+msgid "Find erosion zones"
+msgstr "Najít erozní zóny"
+
+#: examples/databio/hud.html:119
+msgid "Find fields with crop type in area"
+msgstr "Najít pole podle plodiny ve vymezené oblasti"
+
+#: examples/databio/sentineltoolbar.html:1
+msgid "Get Sentinel satellite crossings"
+msgstr "Zobrazit přelety satelitů Sentinelu"
+
+#: examples/databio/hud.html:105
+msgid "ID"
+msgstr "ID"
+
+#: examples/databio/hud.html:59
+msgid "ID Uz"
+msgstr "ID Uz"
+
+#: examples/databio/hud.html:182
+msgid "LPIS FARM ID (ID_UZ)"
+msgstr "LPIS identifikátor farmy (ID_UZ)"
+
+#: examples/databio/hud.html:50
+msgid "Land usage for fields with LPIS ID"
+msgstr "Využití půdy u polí s LPIS ID"
+
+#: examples/databio/sentineldirective.html:15
+msgid ""
+"Map based web application for identifying of usable remote sensing data from "
+"Sentinel satellites. Right click or double click on the map to choose one or "
+"multiple positions (for example fields, forests etc.) and the application "
+"prepare a forecast based on location, minimal satellite elevation and "
+"minimal crossing duration for Sentinel 2A and 2B satellites. The application "
+"calculates timetable of satellites crossing time and weather (clouds) "
+"forecast as a result. User gets information when his selected position(s) "
+"can be photographed and which imagery can be used for further processing."
+msgstr ""
+"Webová mapová aplikace pro identifikaci v zemědělství užitečných dat "
+"dálkového snímání z sentinel satelitů. Klikněte pravým tlačítkem myši nebo "
+"dvojklikem pro výběr jedné nebo více zájmových objektů (například pole, lesy "
+"atd.) a aplikace připraví prognózu na základě umístění, minimální elevace "
+"družice a minimální doby přeletu pro družice Sentinel 2a a 2b. Aplikace "
+"spočítá časový harmonogram přeletů družic a zobrazí předpověď počasí "
+"(zejména oblačnosti). Uživatel získá informace, kdy mohou být zvolené "
+"zájmové objekty zachyceny družicí a které snímky lze použít k dalšímu "
+"zpracování."
+
+#: examples/databio/sentineldirective.html:20
+msgid "MaxUTC"
+msgstr "MaxUTC"
+
+#: examples/databio/parcels_near_water.js:101
+#, fuzzy
+msgid "Plots intersecting water bodies"
+msgstr "Parcely (/Pole) protínající se s vodními plochami"
+
+#: examples/databio/sentineldirective.html:2
+#: examples/databio/sentineltoolbar.html:3
+#, fuzzy
+msgid "Sentinel watcher"
+msgstr "hlídač družic Sentinel"
+
+#: examples/databio/sentineldirective.html:20
+msgid "Sn"
+msgstr "Sn"
+
+#: examples/databio/hud.html:214
+msgid "Soil type"
+msgstr "Typ půdy"
+
+#: examples/databio/sentineldirective.html:20
+#, fuzzy
+msgid "StartUTC"
+msgstr "StartUTC"
+
+#: examples/databio/water_bodies.js:70
+msgid "Water bodies"
+msgstr "Vodní plochy"
+
+#: examples/databio/sentineldirective.html:20
+msgid "Weather"
+msgstr "Počasí"
+
+#: examples/databio/sentineldirective.html:18
+#, fuzzy
+msgid "at"
+msgstr "na (context needed)"
+
+#: examples/databio/hud.html:84
+msgid "code eg. 57011607501"
+msgstr "příklad kódu: 57011607501"
+
+#: examples/databio/hud.html:61
+msgid "e.g. 17614"
+msgstr "např.: 17614"
+
+#: examples/databio/hud.html:193
+msgid "e.g. 57011607501"
+msgstr "např.: 57011607501"
+
+#: examples/databio/hud.html:107
+msgid "e.g. 6423"
+msgstr "např.: 57011607501"

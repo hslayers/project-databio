@@ -1,0 +1,102 @@
+<div class="hud col-xs-11 col-sm-8 col-md-5 col-lg-4 col-xl-3">
+    <style>
+        .sb-right .hud {
+            left: -5px;
+        }
+
+        .hud {
+            top: 70px;
+            width: 362px;
+            position: absolute;
+        }
+
+        .hud .card {
+            padding: 5px;
+        }
+        #accordion .card-header {padding: 0.25rem 1.25rem;}
+    </style>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+        aria-controls="collapseExample" translate>
+        Actions:
+    </button>
+    <div class="collapse in" id="collapseExample">
+        <div class="card controls">
+            <form class="form-inline">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingSix">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
+                                    aria-controls="collapseSix" translate>
+                                    Find erosion zones
+                                </a>
+                        </div>
+                        <div id="collapseSix" class="collapse" role="tabpanel" aria-labelledby="headingSix">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="control-label" translate>LPIS FARM ID (ID_UZ)</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="iduz" placeholder="{{'e.g. 17614'|translate}}" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" ng-click="reloadErosionZonesById()" type="button">Filter</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" translate>CTVDPB</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="ctvdpd" placeholder="{{'e.g. 57011607501'|translate}}" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" ng-click="reloadErosionZonesByCTVDPB()" type="button" translate>Filter</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingSeven">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false"
+                                    aria-controls="collapseSeven" translate>
+                                    Filter fields by soil type in area
+                                </a>
+                        </div>
+                        <div id="collapseSeven" class="collapse" role="tabpanel" aria-labelledby="headingSeven">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="control-label" translate>Soil type</label>
+                                    <div class="input-group">
+                                        <select class="form-control" ng-model="soilType">
+                                            <option ng-value="label" ng-repeat="label in soilTypes">{{label}}</option>
+                                        </select>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" ng-click="reloadSoils()" type="button" translate>Filter</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" role="tab" id="headingNine">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseNine" aria-expanded="true" aria-controls="collapseNine" translate>Filter fields which are near water bodies</a>
+                        </div>
+                        <div id="collapseNine" class="collapse in" role="tabpanel" aria-labelledby="headingNine">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label class="control-label" translate>Distance to water bodies in km</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control col-sm-4" ng-model="proximity" ng-change="reloadPlotsNearRegion()" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" ng-click="reloadPlotsNearRegion()" type="button" translate>Filter</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
