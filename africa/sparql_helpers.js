@@ -13,7 +13,7 @@ define(['ol'],
                 for (var i = 0; i < response.results.bindings.length; i++) {
                     try {
                         var b = response.results.bindings[i];
-                        if (b[geom_name].datatype == "http://www.openlinksw.com/schemas/virtrdf#Geometry" && b[geom_name].value.indexOf('e+') == -1 && b[geom_name].value.indexOf('e-') == -1) {
+                        if (b[geom_name].datatype == "http://www.openlinksw.com/schemas/virtrdf#Geometry") {
                             if (src.getFeatureById(b[id_field].value) == null) {
                                 var g_feature = format.readFeature(b[geom_name].value.toUpperCase());
                                 var geom_transformed = g_feature.getGeometry().transform('EPSG:4326', map.getView().getProjection());

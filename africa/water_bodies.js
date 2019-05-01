@@ -43,14 +43,14 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX virtrdf:	<http://www.openlinksw.com/schemas/virtrdf#> 
 PREFIX poi: <http://www.openvoc.eu/poi#> 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX foodie-cz: <http://foodie-cloud.com/model/foodie-cz#>
+PREFIX foodie-water_body: <http://foodie-cloud.com/model/foodie/water-body#>
 PREFIX foodie: <http://foodie-cloud.com/model/foodie#>
 PREFIX olu: <http://w3id.org/foodie/olu#>
 
 SELECT ?waterBody ?label ?coordWBody
-FROM <http://w3id.org/foodie/open/cz/water_buffer25#>
+FROM <http://w3id.org/foodie/open/africa/water_body#>
 WHERE {
-    ?waterBody a foodie-cz:WaterBody ;
+    ?waterBody a foodie-water_body:WaterBody ;
             rdfs:label ?label ;
             geo:hasGeometry ?geoWBody .
             ?geoWBody ogcgs:asWKT ?coordWBody .
@@ -74,7 +74,7 @@ FILTER(bif:st_intersects (?coordWBody, bif:st_geomFromText("${extents}"))) .
                     title: gettext("Water bodies"),
                     source: src,
                     visible: false,
-                    maxResolution: 4.777314267823516 * 8,
+                    maxResolution: 4.777314267823516 * 8 * 2,
                     style: function(feature, resolution) {
                         return [
                             new ol.style.Style({
