@@ -30,6 +30,7 @@ define(['ol', 'sparql_helpers'],
 
         var me = {
             get: function(map, utils, rect) {
+                console.log('water');
                 if (map.getView().getResolution() > lyr.getMaxResolution() || lyr.getVisible() == false) return;
 
                 function prepareCords(c) {
@@ -38,24 +39,29 @@ define(['ol', 'sparql_helpers'],
                 var extents = `POLYGON ((${prepareCords(rect[0])}, ${prepareCords(rect[1])}, ${prepareCords(rect[2])}, ${prepareCords(rect[3])}, ${prepareCords(rect[0])}, ${prepareCords(rect[1])}))`;
                 var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent(`
 
-PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+                PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX virtrdf:	<http://www.openlinksw.com/schemas/virtrdf#> 
 PREFIX poi: <http://www.openvoc.eu/poi#> 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX foodie-water_body: <http://foodie-cloud.com/model/foodie/water-body#>
+PREFIX foodie-cz: <http://foodie-cloud.com/model/foodie-cz#>
 PREFIX foodie: <http://foodie-cloud.com/model/foodie#>
 PREFIX olu: <http://w3id.org/foodie/olu#>
+PREFIX foodie-water_body: <http://foodie-cloud.com/model/foodie/water-body#>
 
-SELECT ?waterBody ?label ?coordWBody
+SELECT ?waterBody ?label ?waterBodyType ?coordWBody
 FROM <http://w3id.org/foodie/open/africa/water_body#>
 WHERE {
-    ?waterBody a foodie-water_body:WaterBody ;
-            rdfs:label ?label ;
+    ?waterBody a foodie-water_body:WaterBody ;     
             geo:hasGeometry ?geoWBody .
+    OPTIONAL {?waterBody rdfs:label ?label .}
+    OPTIONAL {?waterBody foodie-water_body:waterBodyType ?waterBodyT .
+              ?waterBodyT rdfs:label ?waterBodyType
+             }
             ?geoWBody ogcgs:asWKT ?coordWBody .
-FILTER(bif:st_intersects (?coordWBody, bif:st_geomFromText("${extents}"))) .
+FILTER(bif:st_may_intersect (?coordWBody, bif:st_geomFromText("${extents}"))) .
 }
+
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
 
                 sparql_helpers.startLoading(src, $scope);
@@ -65,7 +71,8 @@ FILTER(bif:st_intersects (?coordWBody, bif:st_geomFromText("${extents}"))) .
                     .done(function(response) {
                         sparql_helpers.fillFeatures(src, 'coordWBody', response, 'waterBody', {
                             waterBody: 'waterBody',
-                            label: 'label'
+                            label: 'label',
+                            waterBodyType: 'waterBodyType'
                         }, map, $scope)
                     })
             },
@@ -74,7 +81,7 @@ FILTER(bif:st_intersects (?coordWBody, bif:st_geomFromText("${extents}"))) .
                     title: gettext("Water bodies"),
                     source: src,
                     visible: false,
-                    maxResolution: 4.777314267823516 * 8 * 2,
+                    maxResolution: 4.777314267823516 * 8 * 16,
                     style: function(feature, resolution) {
                         return [
                             new ol.style.Style({
