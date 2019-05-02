@@ -92,6 +92,7 @@ define(['ol', 'sparql_helpers'],
                       } 
                    }
                 }
+                LIMIT 200
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                 sparql_helpers.startLoading(src, $scope);
                 $.ajax({
