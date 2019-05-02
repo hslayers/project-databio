@@ -27,26 +27,17 @@
                         <div class="card-header" role="tab" id="headingSix">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false"
                                     aria-controls="collapseSix" translate>
-                                    Find erosion zones
+                                    Select crop lands based on LCCS code
                                 </a>
                         </div>
                         <div id="collapseSix" class="collapse" role="tabpanel" aria-labelledby="headingSix">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label class="control-label" translate>LPIS FARM ID (ID_UZ)</label>
+                                    <label class="control-label" translate>LCCS code e.g 10153-1-W7</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" ng-model="iduz" placeholder="{{'e.g. 17614'|translate}}" />
+                                        <input type="text" class="form-control" ng-model="ctvdpd" placeholder="{{'e.g. 10153-1-W7'|translate}}" />
                                         <span class="input-group-btn">
-                                            <button class="btn btn-primary" ng-click="reloadErosionZonesById()" type="button">Filter</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label" translate>CTVDPB</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" ng-model="ctvdpd" placeholder="{{'e.g. 57011607501'|translate}}" />
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" ng-click="reloadErosionZonesByCTVDPB()" type="button" translate>Filter</button>
+                                            <button class="btn btn-primary" ng-click="reloadCTVDPB()" type="button" translate>Filter</button>
                                         </span>
                                     </div>
                                 </div>

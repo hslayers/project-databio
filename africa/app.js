@@ -1,8 +1,8 @@
 'use strict';
 
-define(['ol', 'toolbar', 'layermanager', 'poi', 'parcels_near_region', 'soils', 'water_bodies', 'erosion_zones', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap.bundle', 'angular-gettext', 'translations_extended', 'language'],
+define(['ol', 'toolbar', 'layermanager', 'poi', 'parcels_near_region', 'parcels_with_CTVDPB', 'soils', 'water_bodies', 'erosion_zones', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap.bundle', 'angular-gettext', 'translations_extended', 'language'],
 
-    function(ol, toolbar, layermanager, pois, parcels_near_region, soils, water_bodies, erosion_zones, language) {
+    function(ol, toolbar, layermanager, pois, parcels_near_region, parcels_with_CTVDPB, soils, water_bodies, erosion_zones, language) {
         var module = angular.module('hs', [
             'hs.toolbar',
             'hs.layermanager',
@@ -233,6 +233,7 @@ define(['ol', 'toolbar', 'layermanager', 'poi', 'parcels_near_region', 'soils', 
                 registerProvider(erosion_zones, false);
                 registerProvider(soils);
                 registerProvider(parcels_near_region);
+                registerProvider(parcels_with_CTVDPB);
 
                 $rootScope.$on('map.loaded', function() {
                     map = hs_map.map;
@@ -389,7 +390,7 @@ define(['ol', 'toolbar', 'layermanager', 'poi', 'parcels_near_region', 'soils', 
 
                 $scope.reloadCTVDPB = function() {
                     parcels_with_CTVDPB.getLayer().setVisible(true);
-                    parcels_with_CTVDPB.get(map, utils, getViewport());
+                    parcels_with_CTVDPB.get(map, utils, getViewport(), true);
                 }
 
                 $scope.reloadErosionZonesById = function() {
