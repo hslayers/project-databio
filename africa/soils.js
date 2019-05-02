@@ -21,7 +21,8 @@ define(['ol', 'sparql_helpers'],
                 var entity = entities[i];
                 if (entity.styled) continue;
                 entity.polygon.outline = false;
-                entity.polygon.material = new Cesium.Color.fromCssColorString('rgba(237, 189, 113, 0.6)');
+                entity.original_color = new Cesium.Color.fromCssColorString(entity.properties.soilType ? utils.rainbow($scope.soilTypes.length, $scope.soilTypes.indexOf(entity.properties.soilType.getValue()), 0.8) : 'rgba(237, 189, 113, 0.6)');
+                entity.polygon.material = new Cesium.ColorMaterialProperty(entity.original_color);
                 var polyPositions = entity.polygon.hierarchy.getValue(Cesium.JulianDate.now()).positions;
                 var polyCenter = Cesium.BoundingSphere.fromPoints(polyPositions).center;
                 polyCenter = Cesium.Ellipsoid.WGS84.scaleToGeodeticSurface(polyCenter);
@@ -39,7 +40,7 @@ define(['ol', 'sparql_helpers'],
                     heightReference: Cesium.HeightReference.CLAMP_TO_GROUND
                 })
                 entity.styled = true;
-                //entity.onclick = entityClicked
+                entity.onclick = entityClicked
             }
         }
 
@@ -51,6 +52,7 @@ define(['ol', 'sparql_helpers'],
                     return c.toString().replaceAll(',', ' ')
                 }
                 var extents = `POLYGON ((${prepareCords(rect[0])}, ${prepareCords(rect[1])}, ${prepareCords(rect[2])}, ${prepareCords(rect[3])}, ${prepareCords(rect[0])}, ${prepareCords(rect[1])}))`;
+                var soilTypeFilter = $scope.soilType == 'All' ? '' : `FILTER(STRSTARTS(STR(?soilTypeName),"${$scope.soilType}") ) .`
                 var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent(`
 
                 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -62,33 +64,33 @@ define(['ol', 'sparql_helpers'],
                 PREFIX foodie: <http://foodie-cloud.com/model/foodie#>
                 PREFIX olu: <http://w3id.org/foodie/olu#>
                 PREFIX common: <http://portele.de/ont/inspire/baseInspire#>
-
-
-                SELECT DISTINCT ?plot ?soilType ?code ?shortId ?landUse ?coordPlotFinal
-                FROM <http://w3id.org/foodie/open/cz/pLPIS_180616_WGS#>
-                WHERE {
-                ?plot a foodie:Plot ;
-                        foodie:code ?code ;
-                        foodie-cz:shortId ?shortId ;
-                        olu:specificLandUse ?landUse ;
-                        geo:hasGeometry ?geoPlotFinal .
-                    ?geoPlotFinal ogcgs:asWKT  ?coordPlotFinal .
-                    FILTER(bif:st_intersects(?coordPlotFinal, ?coordSoil)) .
-                    GRAPH ?graph1 {
-                        SELECT ?soil (?label as ?soilType) ?codeSoil ?description ?link ?coordSoil
-                        FROM <http://w3id.org/foodie/open/cz/Soil_maps_BPEJ_WGSc#>
-                        WHERE {
-                            ?soil a foodie:Plot ;
-                                    geo:hasGeometry ?geoSoil .
-                            optional {?soil rdfs:label ?label }.
-                            optional {?soil foodie:code ?codeSoil }.
-                            optional {?soil common:link ?link }.
-                            optional {?soil foodie:description ?description }.
-                            ?geoSoil ogcgs:asWKT ?coordSoil .
-                            FILTER(STRSTARTS(STR(?label),"${$scope.soilType}") ).
-                        FILTER(bif:st_intersects (?coordSoil, bif:st_geomFromText("${extents}"))) .
-                        }
-                    }
+                PREFIX iso19103: <http://def.seegrid.csiro.au/isotc211/iso19103/2005/basic#>
+                PREFIX soilType: <http://foodie-cloud.com/model/foodie/code/PropertyTypeValue/soilType>
+                
+                SELECT ?site ?soilTypeName ?code ?coordSite ?coordSoil
+                FROM <http://w3id.org/foodie/open/kenya/ke_crops_size#>
+                WHERE{ 
+                    ?site a foodie:Site ;
+                          rdfs:label ?site_label ;
+                          foodie:code ?code ;
+                          geo:hasGeometry ?geoSite .
+                    ?geoSite geo:asWKT  ?coordSite .
+                    FILTER(bif:st_may_intersect(?coordSite, ?coordSoil)) .
+                    {
+                      SELECT ?soilTypeName ?coordSoil
+                      FROM <http://w3id.org/foodie/open/kenya/soil_maps#>
+                      WHERE {
+                         ?soil a foodie:Plot ;
+                                 geo:hasGeometry ?geoSoil .
+                         ?soil foodie:soilProperty ?soil_type.
+                         ?soil_type a foodie:PropertyType .
+                         ?soil_type foodie:propertyType soilType: .
+                         ?soil_type foodie:propertyName ?soilTypeName .
+                         ?geoSoil geo:asWKT ?coordSoil .
+                         ${soilTypeFilter}
+                         FILTER(bif:st_may_intersect (?coordSoil, bif:st_geomFromText("${extents}"))) .
+                      } 
+                   }
                 }
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                 sparql_helpers.startLoading(src, $scope);
@@ -96,18 +98,17 @@ define(['ol', 'sparql_helpers'],
                         url: q
                     })
                     .done(function(response) {
-                        sparql_helpers.fillFeatures(src, 'coordPlotFinal', response, 'code', {
-                            plot: 'plot',
-                            shortId: 'shortId',
+                        sparql_helpers.fillFeatures(src, 'coordSoil', response, 'code', {
+                            site: 'site',
                             code: 'code',
-                            soilType: 'soilType'
+                            soilType: 'soilTypeName'
                         }, map, $scope, $scope)
                     })
             },
             createLayer: function(gettext) {
                 lyr = new ol.layer.Vector({
                     title: gettext("Fields with soil type"),
-                    maxResolution: 4.777314267823516,
+                    maxResolution: 4.777314267823516 * 2 * 2 * 2 * 2 * 2,
                     source: src,
                     visible: false,
                     style: function(feature, resolution) {
@@ -137,13 +138,14 @@ define(['ol', 'sparql_helpers'],
                 PREFIX common: <http://portele.de/ont/inspire/baseInspire#>
                 PREFIX soilType: <http://foodie-cloud.com/model/foodie/code/PropertyTypeValue/soilType>
                 
-                SELECT ?name 
-                FROM <http://w3id.org/foodie/open/cz/Soil_maps_BPEJ_WGSc#>
+                SELECT DISTINCT ?name 
+                FROM <http://w3id.org/foodie/open/kenya/soil_maps#>
                 WHERE {
                 ?s a foodie:PropertyType .
                 ?s foodie:propertyType soilType: .
                 ?s foodie:propertyName ?name
                 } 
+                
                 
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                 $.ajax({
@@ -153,6 +155,7 @@ define(['ol', 'sparql_helpers'],
                         $scope.soilTypes = response.results.bindings.map(function(r) {
                             return r.name.value;
                         })
+                        $scope.soilTypes.unshift('All');
                     })
             },
             getLayer() {
