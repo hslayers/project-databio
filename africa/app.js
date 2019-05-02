@@ -133,21 +133,6 @@ define(['ol', 'toolbar', 'layermanager', 'poi', 'parcels_near_region', 'parcels_
                     opacity: 0.7
                 }),
                 new ol.layer.Tile({
-                    title: "Production zones",
-                    source: new ol.source.TileWMS({
-                        url: 'http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/produkcni_zony.map',
-                        params: {
-                            LAYERS: 'p_zony',
-                            FORMAT: "image/png",
-                            INFO_FORMAT: "text/html",
-                        },
-                        crossOrigin: null
-                    }),
-                    path: 'Open-Land-Use Map',
-                    visible: false,
-                    opacity: 0.7
-                }),
-                new ol.layer.Tile({
                     title: "Open-Land-Use (WMS)",
                     source: new ol.source.TileWMS({
                         url: 'http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/olu/openlandusemap.map',
@@ -230,7 +215,7 @@ define(['ol', 'toolbar', 'layermanager', 'poi', 'parcels_near_region', 'parcels_
                 }
 
                 registerProvider(water_bodies);
-                registerProvider(erosion_zones, false);
+                //registerProvider(erosion_zones, false);
                 registerProvider(soils);
                 registerProvider(parcels_near_region);
                 registerProvider(parcels_with_CTVDPB);
