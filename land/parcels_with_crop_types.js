@@ -130,17 +130,19 @@ define(['ol', 'sparql_helpers'],
             },
             fillClassificators() {
                 var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent(`PREFIX foodie-cz: <http://foodie-cloud.com/model/foodie-cz#>
+                PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+                PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                 PREFIX foodie: <http://foodie-cloud.com/model/foodie#>
                 
-                SELECT DISTINCT ?cropType ?cropName
+                SELECT distinct ?cropType ?cropTypeName
                 FROM <http://w3id.org/foodie/core/cz/CZpilot_fields#>
                 WHERE{ 
-                    ?plot a foodie:Plot ;
-                       foodie:crop ?cropSpecies.
-                    ?cropSpecies foodie:cropSpecies ?cropType .
-                    ?cropType foodie:description ?cropName .
+                    ?cropType a foodie:CropType ;
+                         rdfs:label ?cropTypeName .
+                
                 }
-                ORDER BY ?cropName
+               
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
                 $.ajax({
                         url: q
@@ -148,7 +150,7 @@ define(['ol', 'sparql_helpers'],
                     .done(function(response) {
                         $scope.cropTypes = response.results.bindings.map(function(r) {
                             return {
-                                name: r.cropName.value,
+                                name: r.cropTypeName.value,
                                 id: r.cropType.value
                             };
                         })

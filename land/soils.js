@@ -69,23 +69,22 @@ define(['ol', 'sparql_helpers'],
                 WHERE {
                 ?plot a foodie:Plot ;
                         foodie:code ?code ;
-                        foodie-cz:shortId ?shortId ;
+                        foodie:shortId ?shortId ;
                         olu:specificLandUse ?landUse ;
                         geo:hasGeometry ?geoPlotFinal .
                     ?geoPlotFinal ogcgs:asWKT  ?coordPlotFinal .
                     FILTER(bif:st_intersects(?coordPlotFinal, ?coordSoil)) .
                     GRAPH ?graph1 {
-                        SELECT ?soil (?label as ?soilType) ?codeSoil ?description ?link ?coordSoil
+                        SELECT ?soil ?soilType ?codeSoil ?link ?coordSoil
                         FROM <http://w3id.org/foodie/open/cz/Soil_maps_BPEJ_WGSc#>
                         WHERE {
                             ?soil a foodie:Plot ;
                                     geo:hasGeometry ?geoSoil .
-                            optional {?soil rdfs:label ?label }.
                             optional {?soil foodie:code ?codeSoil }.
                             optional {?soil common:link ?link }.
-                            optional {?soil foodie:description ?description }.
+                            optional {?soil foodie:soilProperty ?soilProperty . ?soilProperty foodie:propertyName ?soilType }.
                             ?geoSoil ogcgs:asWKT ?coordSoil .
-                            FILTER(STRSTARTS(STR(?label),"${$scope.soilType}") ).
+                            FILTER(STRSTARTS(STR(?soilType),"${$scope.soilType}") ).
                         FILTER(bif:st_intersects (?coordSoil, bif:st_geomFromText("${extents}"))) .
                         }
                     }
@@ -107,7 +106,7 @@ define(['ol', 'sparql_helpers'],
             createLayer: function(gettext) {
                 lyr = new ol.layer.Vector({
                     title: gettext("Fields with soil type"),
-                    maxResolution: 4.777314267823516,
+                    maxResolution: 4.777314267823516 * 2,
                     source: src,
                     visible: false,
                     style: function(feature, resolution) {
@@ -127,7 +126,8 @@ define(['ol', 'sparql_helpers'],
                 return lyr;
             },
             fillClassificators() {
-                var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent(`PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+                var q = 'https://www.foodie-cloud.org/sparql?default-graph-uri=&query=' + encodeURIComponent(`
+                PREFIX geo: <http://www.opengis.net/ont/geosparql#>
                 PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
                 PREFIX virtrdf:	<http://www.openlinksw.com/schemas/virtrdf#> 
                 PREFIX poi: <http://www.openvoc.eu/poi#> 
@@ -136,7 +136,7 @@ define(['ol', 'sparql_helpers'],
                 PREFIX olu: <http://w3id.org/foodie/olu#>
                 PREFIX common: <http://portele.de/ont/inspire/baseInspire#>
                 PREFIX soilType: <http://foodie-cloud.com/model/foodie/code/PropertyTypeValue/soilType>
-                
+
                 SELECT ?name 
                 FROM <http://w3id.org/foodie/open/cz/Soil_maps_BPEJ_WGSc#>
                 WHERE {

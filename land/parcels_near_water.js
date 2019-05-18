@@ -50,43 +50,39 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
 PREFIX virtrdf:	<http://www.openlinksw.com/schemas/virtrdf#> 
 PREFIX poi: <http://www.openvoc.eu/poi#> 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX foodie-cz: <http://foodie-cloud.com/model/foodie-cz#>
 PREFIX foodie: <http://foodie-cloud.com/model/foodie#>
 PREFIX olu: <http://w3id.org/foodie/olu#>
+PREFIX common: <http://portele.de/ont/inspire/baseInspire#>
+PREFIX foodie-water_body: <http://foodie-cloud.com/model/foodie/water-body#>
 
-
-SELECT DISTINCT ?plot ?code ?shortId ?landUse ?coordPlotFinal
+SELECT DISTINCT ?plot ?code ?shortId ?landUseCode ?landUseLabel ?coordPlot
 FROM <http://w3id.org/foodie/open/cz/pLPIS_180616_WGS#>
+FROM <http://w3id.org/foodie/open/cz/lpis/code/LandUseClassificationValue>
 WHERE {
-   ?plot geo:hasGeometry ?geoPlotFinal .
-   ?geoPlotFinal ogcgs:asWKT  ?coordPlotFinal .
-   FILTER(bif:st_intersects(?coordPlotFinal, ?coordWBody, ${distance})) .
-   
+   ?plot a foodie:Plot ;
+         foodie:code ?code ;
+         foodie:shortId ?shortId ;
+         olu:specificLandUse ?landUseCode ;
+         geo:hasGeometry ?geoPlot .
+   ?geoPlot geo:asWKT  ?coordPlot .
+   FILTER(bif:st_intersects(?coordPlot, ?coordWBody, 0.00025)) .
+   ?landUseCode skos:prefLabel ?landUseLabel .
+   FILTER (lang(?landUseLabel) = 'en' || lang(?landUseLabel) = '')     
+
    GRAPH ?graph1 {
-      SELECT ?plot ?code ?shortId ?landUse
-      FROM <http://w3id.org/foodie/open/cz/pLPIS_180616_WGS#>
-      WHERE{ 
-         ?plot a foodie:Plot ;
-            foodie:code ?code ;
-            foodie-cz:shortId ?shortId ;
-            olu:specificLandUse ?landUse ;
-            geo:hasGeometry ?geoPlot .
-         ?geoPlot ogcgs:asWKT  ?coordPlot .
-         FILTER(bif:st_may_intersect  (?coordPlot, bif:st_geomFromText("${extents}"))) .   
-     }
-   }
-   GRAPH ?graph2 {
       SELECT ?waterBody ?label ?coordWBody
       FROM <http://w3id.org/foodie/open/cz/water_buffer25#>
       WHERE {
-          ?waterBody a foodie-cz:WaterBody ;
+          ?waterBody a foodie-water_body:WaterBody ;
                  rdfs:label ?label ;
                  geo:hasGeometry ?geoWBody .
-                 ?geoWBody ogcgs:asWKT ?coordWBody .
-     FILTER(bif:st_intersects (?coordWBody, bif:st_geomFromText("${extents}"))) .
+                 ?geoWBody geo:asWKT ?coordWBody .
+
+     FILTER(bif:st_may_intersect (?coordWBody, bif:st_geomFromText("${extents}"))) .
       }
    }
 }
+LIMIT 500
                 `) + '&should-sponge=&format=application%2Fsparql-results%2Bjson&timeout=0&debug=on';
 
                 sparql_helpers.startLoading(src, $scope);
@@ -94,9 +90,10 @@ WHERE {
                         url: q
                     })
                     .done(function(response) {
-                        sparql_helpers.fillFeatures(src, 'coordPlotFinal', response, 'code', {
+                        sparql_helpers.fillFeatures(src, 'coordPlot', response, 'code', {
                             parcel: 'code',
-                            use: 'landUse'
+                            landUseCode: 'landUseCode',
+                            landUseLabel: 'landUseLabel'
                         }, map, $scope)
                     })
             },

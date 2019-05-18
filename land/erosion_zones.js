@@ -97,22 +97,25 @@ define(['ol', 'sparql_helpers'],
                 PREFIX virtrdf:	<http://www.openlinksw.com/schemas/virtrdf#> 
                 PREFIX poi: <http://www.openvoc.eu/poi#> 
                 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                PREFIX foodie-cz: <http://foodie-cloud.com/model/foodie-cz#>
+                PREFIX foodie-EZ: <http://foodie-cloud.com/model/foodie/soil-erosion#>
                 PREFIX foodie: <http://foodie-cloud.com/model/foodie#>
                 PREFIX common: <http://portele.de/ont/inspire/baseInspire#>
                 PREFIX prov: <http://www.w3.org/ns/prov#>
                 PREFIX olu: <http://w3id.org/foodie/olu#>
                 PREFIX af-inspire: <http://inspire.ec.europa.eu/schemas/af/3.0#>
 
-                SELECT DISTINCT ?erosionZone ?erosion ?erosionCoord
+                SELECT DISTINCT ?erosionZone ?erosion ?erosionDescription ?erosionCoord
                 FROM <http://w3id.org/foodie/open/cz/Erosion_zones_WGS#>
                 WHERE {
-                ?erosionZone a foodie-cz:ErosionZone ;
-                    foodie-cz:erosion ?erosion ;
-                    geo:hasGeometry ?erosionGeo .
-                ?erosionGeo geo:asWKT ?erosionCoord .
-                FILTER(bif:st_intersects(?erosionCoord, ?coordPlotFinal)) .
-                {
+                    ?erosionZone a foodie-EZ:ErosionZone ;
+                       foodie:soilProperty ?soilProperty ;
+                       geo:hasGeometry ?erosionGeo .
+                    ?soilProperty foodie:propertyName ?erosion ;
+                                  foodie:nonQuantitativeProperty ?erosionDescription .
+                    ?erosionGeo geo:asWKT ?erosionCoord .
+                    FILTER(bif:st_intersects(?erosionCoord, ?coordPlotFinal)) .
+                    {
+                  
                 SELECT ?plot ?coordPlotFinal
                 FROM <http://w3id.org/foodie/open/cz/pLPIS_180616_WGS#>
                 WHERE {
