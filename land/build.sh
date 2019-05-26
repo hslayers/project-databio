@@ -1,4 +1,3 @@
 #!/bin/sh
 sh compile_translations.sh
-node browserify.js
-grunt
+webpack --config webpack.prod.js --progress

@@ -4,7 +4,6 @@ import 'openlayers/css/ol.css';
 import 'hslayers-ng/css/app.css';
 import 'hslayers-ng/css/whhg-font/css/whhg.css';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
-import 'cesium/Build/Cesium/Cesium.js';
 
 import ol from 'ol';
 import $ from 'jquery';
@@ -269,6 +268,7 @@ angular.forEach([{
 ], function (def) {
     if (caps.indexOf('not found') > -1) return;
     var timeInterval = $("Layer Name:contains('" + def.layer + "')", caps).parent().find('Dimension[name="time"]').html();
+    if(typeof timeInterval == 'undefined') return;
     var timeSteps = prepareTimeSteps(timeInterval);
     var elevations;
     if ($("Layer Name:contains('" + def.layer + "')", caps).parent().find('Dimension[name="elevation"]').length > 0)
@@ -363,6 +363,7 @@ angular.forEach([{
 ], function (def) {
     if (caps.indexOf('not found') > -1) return;
     var timeInterval = $("Layer Name:contains('" + def.layer + "')", caps).parent().find('Dimension[name="time"]').html();
+    if(typeof timeInterval =='undefined') return;
     var timeSteps = prepareTimeSteps(timeInterval);
     layers.push(new ol.layer.Image({
         title: def.title,

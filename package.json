@@ -52,6 +52,7 @@
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.2",
     "webpack-merge": "^4.2.1",
-    "ng-cache-loader": "0.0.26"
+    "ng-cache-loader": "0.0.26",
+    "url-loader": "^1.1.2"
   }
 }
