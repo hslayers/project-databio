@@ -8,3 +8,5 @@ water/bundle.js
 water/bundle.min.js
 africa/bundle.js
 africa/bundle.min.js
+static
+water/index.html
