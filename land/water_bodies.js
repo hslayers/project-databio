@@ -1,9 +1,14 @@
 import $ from 'jquery';
-import ol from 'ol';
 import sparql_helpers from 'sparql_helpers';
+import {Style, Icon, Stroke, Fill, Circle} from 'ol/style';
+import { WKT, GeoJSON } from 'ol/format';
+import Feature from 'ol/Feature';
+import { Vector } from 'ol/source';
+import {transform, transformExtent} from 'ol/proj';
+import {extend} from 'ol/extent';
+import VectorLayer from 'ol/layer/Vector';
 
-
-var src = new ol.source.Vector();
+var src = new Vector();
 var $scope;
 var $compile;
 var map;
@@ -72,15 +77,15 @@ FILTER(bif:st_intersects (?coordWBody, bif:st_geomFromText("${extents}"))) .
             })
     },
     createLayer: function (gettext) {
-        lyr = new ol.layer.Vector({
+        lyr = new VectorLayer({
             title: gettext("Water bodies"),
             source: src,
             visible: false,
             maxResolution: 4.777314267823516 * 8,
             style: function (feature, resolution) {
                 return [
-                    new ol.style.Style({
-                        fill: new ol.style.Stroke({
+                    new Style({
+                        fill: new Stroke({
                             color: 'rgba(0, 0, 220, 0.8)'
                         })
                     })

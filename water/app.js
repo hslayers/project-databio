@@ -1,27 +1,27 @@
 'use strict';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'openlayers/css/ol.css';
-import 'hslayers-ng/css/app.css';
-import 'hslayers-ng/css/whhg-font/css/whhg.css';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 
-import ol from 'ol';
 import $ from 'jquery';
-import toolbar from 'toolbar';
-import print from 'print';
-import query from 'query';
-import search from 'search';
-import measure from 'measure';
-import permalink from 'permalink';
-import info from 'info';
-import ds from 'datasource_selector';
-import sidebar from 'sidebar';
-import ows from 'ows';
+import 'toolbar.module';
+import 'print.module';
+import 'query.module';
+import 'search.module';
+import 'measure.module';
+import 'permalink.module';
+import 'info.module';
+import 'datasource-selector.module';
+import 'sidebar.module';
+import 'add-layers.module';
 import bootstrapBundle from 'bootstrap/dist/js/bootstrap.bundle';
 import moment from 'moment';
 global.moment = moment;
 import momentInterval from 'moment-interval/src/moment-interval'
-import hsCesium from 'hscesium';
+import 'hscesium.module';
+import { Tile, Image as ImageLayer , Group} from 'ol/layer';
+import { TileWMS, WMTS, OSM, XYZ } from 'ol/source';
+import {ImageWMS, ImageArcGISRest} from 'ol/source';
+import View from 'ol/View';
+import {transform, transformExtent} from 'ol/proj';
 
 var module = angular.module('hs', [
     'hs.toolbar',
@@ -32,7 +32,7 @@ var module = angular.module('hs', [
     'hs.geolocation',
     'hs.cesium',
     'hs.sidebar',
-    'hs.ows'
+    'hs.addLayers'
 ]);
 
 module.directive('hs', ['hs.map.service', 'Core', '$compile', '$timeout', function (OlMap, Core, $compile, $timeout) {
@@ -91,17 +91,17 @@ function prepareTimeSteps(step_string) {
 }
 
 var layers = [
-    new ol.layer.Tile({
-        source: new ol.source.OSM(),
+    new Tile({
+        source: new OSM(),
         title: "OpenStreetMap",
         base: true,
         visible: false,
         minimumTerrainLevel: 15
     }),
     /*
-                new ol.layer.Image({
+                new ImageLayer({
                     title: "Road segments of Open Transport Map vizualized by their average daily traffic volumes",
-                    source: new ol.source.ImageWMS({
+                    source: new ImageWMS({
                         url: 'https://intenzitadopravy.plzen.eu/wms-t',
                         params: {
                             LAYERS: 'may',
@@ -121,9 +121,9 @@ var layers = [
 ];
 
 var catchesTimeSteps = prepareTimeSteps('2016-01-01T12:00:00.000Z/2018-01-01T12:00:00.000Z/PT24H');
-layers.push(new ol.layer.Image({
+layers.push(new ImageLayer({
     title: 'Latest temperature',
-    source: new ol.source.ImageWMS({
+    source: new ImageWMS({
         url: 'http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/copernicus_marine.map',
         params: {
             LAYERS: 'temperature',
@@ -137,9 +137,9 @@ layers.push(new ol.layer.Image({
     visible: true,
     opacity: 0.7,
 }));
-layers.push(new ol.layer.Image({
+layers.push(new ImageLayer({
     title: 'Catches',
-    source: new ol.source.ImageWMS({
+    source: new ImageWMS({
         url: 'http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map',
         params: {
             LAYERS: 'composition',
@@ -172,9 +172,9 @@ layers.push(new ol.layer.Image({
     opacity: 0.7,
 }));
 
-layers.push(new ol.layer.Image({
+layers.push(new ImageLayer({
     title: 'Cod catches (2016-2017), year, amount and distance',
-    source: new ol.source.ImageWMS({
+    source: new ImageWMS({
         url: 'http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map',
         params: {
             LAYERS: 'cod_catches_distance',
@@ -190,9 +190,9 @@ layers.push(new ol.layer.Image({
 }));
 
 angular.forEach(['in_winter', 'in_summer', 'in_spring', 'in_autumn'], function (lyr) {
-    layers.push(new ol.layer.Image({
+    layers.push(new ImageLayer({
         title: 'Cod catches ' + lyr + ', year, amount and distance',
-        source: new ol.source.ImageWMS({
+        source: new ImageWMS({
             url: 'http://gis-new.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/svalbard.map',
             params: {
                 LAYERS: lyr,
@@ -273,9 +273,9 @@ angular.forEach([{
     var elevations;
     if ($("Layer Name:contains('" + def.layer + "')", caps).parent().find('Dimension[name="elevation"]').length > 0)
         elevations = $("Layer Name:contains('" + def.layer + "')", caps).parent().find('Dimension[name="elevation"]').html();
-    layers.push(new ol.layer.Image({
+    layers.push(new ImageLayer({
         title: def.title,
-        source: new ol.source.ImageWMS({
+        source: new ImageWMS({
             url: 'http://nrt.cmems-du.eu/thredds/wms/global-analysis-forecast-phy-001-024?',
             params: {
                 LAYERS: def.layer,
@@ -365,9 +365,9 @@ angular.forEach([{
     var timeInterval = $("Layer Name:contains('" + def.layer + "')", caps).parent().find('Dimension[name="time"]').html();
     if(typeof timeInterval =='undefined') return;
     var timeSteps = prepareTimeSteps(timeInterval);
-    layers.push(new ol.layer.Image({
+    layers.push(new ImageLayer({
         title: def.title,
-        source: new ol.source.ImageWMS({
+        source: new ImageWMS({
             url: 'http://nrt.cmems-du.eu/thredds/wms/dataset-global-analysis-forecast-bio-001-014',
             params: {
                 LAYERS: def.layer,
@@ -410,7 +410,7 @@ module.value('config', {
     'catalogue_url': "/php/metadata/csw",
     'compositions_catalogue_url': "/php/metadata/csw",
     status_manager_url: '/wwwlibs/statusmanager2/index.php',
-    default_view: new ol.View({
+    default_view: new View({
         center: [2627959.3498800094, 14587004.698994633],
         zoom: 5,
         units: "m"

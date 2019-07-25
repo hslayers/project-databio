@@ -10,17 +10,16 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common');
 const path = require('path');
-const common_paths = require(path.join(__dirname, '../node_modules/hslayers-ng/common_paths'));
+const common_paths = require(path.join( __dirname, '../node_modules/hslayers-ng/common_paths'));
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'cheap-eval-source-map',
-  //watchOptions: { ignored: /node_modules/ },
-  resolve: {
-    symlinks: false,
+  watchOptions: { ignored: /node_modules/ },
+  resolve: { symlinks: true,  
     modules: [
-      __dirname,
+      path.join(__dirname),
       path.join(__dirname, "../node_modules"),
-      path.join(__dirname, "../node_modules", "hslayers-ng")
+      path.resolve(path.join(__dirname, "../node_modules", "hslayers-ng"))
     ].concat(common_paths.paths)
   },
   optimization: {
@@ -40,33 +39,37 @@ module.exports = merge(common, {
       // Load css files which will be injected in html page at startup <style>...</style>)
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-        include: [path.resolve(__dirname), 
-          path.join(__dirname, '../node_modules'),
-          path.join(__dirname, '../node_modules/hslayers-ng')
-        ]
+        use: [ 'style-loader', 'css-loader' ]
       },
       {
-        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-        include: [path.join(__dirname), path.join(__dirname, '../node_modules/hslayers-ng')],
-        use: ['url-loader']
+          test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [{
+              loader: 'file-loader',
+              options: {
+                  name: '[name].[ext]',
+                  outputPath: 'fonts/'
+              }
+          }]
       },
       // Load angularJS partials HTML file as URL
       {
         test: /\.html$/,
-        include: [path.join(__dirname), path.join(__dirname, '../node_modules/hslayers-ng')],
         exclude: path.resolve(__dirname, 'src/index.html'),
-        use: [
-          'ng-cache-loader?prefix=[dir]/[dir]',
-          'extract-loader',
-          'html-loader'
-        ]
+          use: [
+            'ng-cache-loader?prefix=[dir]/[dir]',
+            'extract-loader',
+            'html-loader'
+          ]
       },
       // Load images as URLs
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: {
-          loader: 'url-loader'
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images'
+          }
         }
       },
       // Load locales files
@@ -76,7 +79,11 @@ module.exports = merge(common, {
         include: path.resolve(__dirname, 'assets/locales'),
         use: [
           {
-            loader: 'url-loader',
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'locales'
+            }
           }
         ]
       }

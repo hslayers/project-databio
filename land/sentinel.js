@@ -1,8 +1,13 @@
-import ol from 'ol';
+import sparql_helpers from 'sparql_helpers';
+import {Style, Icon, Stroke, Fill, Circle} from 'ol/style';
+import { WKT, GeoJSON } from 'ol/format';
+import Feature from 'ol/Feature';
+import { Vector } from 'ol/source';
+import {transform, transformExtent} from 'ol/proj';
+import {extend} from 'ol/extent';
+import {Polygon, LineString, GeometryType, Point} from 'ol/geom';
 import $ from 'jquery';
-import map from 'map';
-import core from 'core';
-
+import VectorLayer from 'ol/layer/Vector';
 
 angular.module('hs.sentinel', ['hs.core', 'hs.map'])
 
@@ -47,7 +52,7 @@ angular.module('hs.sentinel', ['hs.core', 'hs.map'])
                     });
                 },
                 createLayer() {
-                    var src = new ol.source.Vector();
+                    var src = new Vector();
                     src.cesiumStyler = function (dataSource) {
                         var entities = dataSource.entities.values;
                         for (var i = 0; i < entities.length; i++) {
@@ -71,14 +76,14 @@ angular.module('hs.sentinel', ['hs.core', 'hs.map'])
                             //entity.onclick = entityClicked
                         }
                     }
-                    var lyr = new ol.layer.Vector({
+                    var lyr = new VectorLayer({
                         title: "Sentinel crossings",
                         source: src,
                         visible: true,
                         style: function (feature, resolution) {
                             return [
-                                new ol.style.Style({
-                                    stroke: new ol.style.Stroke({
+                                new Style({
+                                    stroke: new Stroke({
                                         color: 'rgba(0, 0, 0, 1)',
                                         width: 2
                                     })
@@ -104,8 +109,8 @@ angular.module('hs.sentinel', ['hs.core', 'hs.map'])
                     lat: data[1].toFixed(2),
                     ix: $scope.points.length
                 });
-                service.src.addFeatures([new ol.Feature({
-                    geometry: new ol.geom.Point(ol.proj.transform([data[0], data[1]], 'EPSG:4326', OlMap.map.getView().getProjection().getCode())),
+                service.src.addFeatures([new Feature({
+                    geometry: new Point(transform([data[0], data[1]], 'EPSG:4326', OlMap.map.getView().getProjection().getCode())),
                     ix: $scope.points.length - 1
                 })]);
                 service.src.dispatchEvent('features:loaded', service.src);

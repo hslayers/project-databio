@@ -1,9 +1,16 @@
 import $ from 'jquery';
-import ol from 'ol';
+import sparql_helpers from 'sparql_helpers';
+import {Style, Icon, Stroke, Fill, Circle} from 'ol/style';
+import { WKT, GeoJSON } from 'ol/format';
+import Feature from 'ol/Feature';
+import { Vector } from 'ol/source';
+import {transform, transformExtent} from 'ol/proj';
+import {extend} from 'ol/extent';
+import {Polygon, LineString, GeometryType, Point} from 'ol/geom';
 import me from './parcels_with_crop_types_by_distance';
+import VectorLayer from 'ol/layer/Vector';
 
-
-var spoi_source = new ol.source.Vector();
+var spoi_source = new Vector();
 var $scope;
 var $compile;
 var lyr;
@@ -71,7 +78,7 @@ spoi_source.cesiumStyler = function (dataSource) {
 export default {
     getPois: function (map, utils, rect) {
         if (map.getView().getResolution() > lyr.getMaxResolution() || lyr.getVisible() == false) return;
-        var format = new ol.format.WKT();
+        var format = new WKT();
 
         function prepareCords(c) {
             return c.toString().replaceAll(',', ' ')
@@ -104,7 +111,7 @@ export default {
                             var g_feature = format.readFeature(b.wkt.value.toUpperCase());
                             var ext = g_feature.getGeometry().getExtent()
                             var geom_transformed = g_feature.getGeometry().transform('EPSG:4326', map.getView().getProjection());
-                            var feature = new ol.Feature({
+                            var feature = new Feature({
                                 geometry: geom_transformed,
                                 poi: b.poi.value,
                                 category: b.sub.value,
@@ -123,7 +130,7 @@ export default {
             })
     },
     createPoiLayer: function () {
-        lyr = new ol.layer.Vector({
+        lyr = new VectorLayer({
             title: "Points of interest",
             source: spoi_source,
             maxResolution: 4.777314267823516 * 2 * 2,
@@ -137,8 +144,8 @@ export default {
                 else
                     s = '../foodie-zones/symbols/other.png'
                 return [
-                    new ol.style.Style({
-                        image: new ol.style.Icon({
+                    new Style({
+                        image: new Icon({
                             anchor: [0.5, 1],
                             src: s,
                             size: [30, 35],

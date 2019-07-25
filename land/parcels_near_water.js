@@ -1,8 +1,14 @@
 import $ from 'jquery';
-import ol from 'ol';
+import {Style, Icon, Stroke, Fill, Circle} from 'ol/style';
+import { WKT, GeoJSON } from 'ol/format';
+import Feature from 'ol/Feature';
+import { Vector } from 'ol/source';
+import {transform, transformExtent} from 'ol/proj';
+import {extend} from 'ol/extent';
 import sparql_helpers from 'sparql_helpers';
+import VectorLayer from 'ol/layer/Vector';
 
-var src = new ol.source.Vector();
+var src = new Vector();
 var $scope;
 var $compile;
 var map;
@@ -99,7 +105,7 @@ LIMIT 500
             })
     },
     createLayer: function (gettext) {
-        lyr = new ol.layer.Vector({
+        lyr = new VectorLayer({
             title: gettext("Plots intersecting water bodies"),
             source: src,
             visible: false,
@@ -108,12 +114,12 @@ LIMIT 500
                 var use = feature.get('use').split('/');
                 use = use[use.length - 1];
                 return [
-                    new ol.style.Style({
-                        stroke: new ol.style.Stroke({
+                    new Style({
+                        stroke: new Stroke({
                             color: 'rgba(50, 50, 150, 0.8)',
                             width: 2
                         }),
-                        fill: new ol.style.Fill({
+                        fill: new Fill({
                             color: 'rgba(50, 50, 150, 0.6)'
                         })
                     }),

@@ -22,7 +22,7 @@ module.exports = {
     publicPath: 'static/'
   },
   // Just for build speed improvement
-  resolve: { symlinks: false},
+  resolve: { symlinks: true},
   plugins: [
     // Clean before build
     new CleanWebpackPlugin(),

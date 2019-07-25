@@ -1,23 +1,17 @@
 'use strict';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'openlayers/css/ol.css';
-import 'hslayers-ng/css/app.css';
-import 'hslayers-ng/css/whhg-font/css/whhg.css';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 
-import ol from 'ol';
 import $ from 'jquery';
-import toolbar from 'toolbar';
-import print from 'print';
-import query from 'query';
-import search from 'search';
-import measure from 'measure';
-import permalink from 'permalink';
-import info from 'info';
-import ds from 'datasource_selector';
-import sidebar from 'sidebar';
-import ows from 'ows';
-import sentinel from 'sentinel';
+import 'toolbar.module';
+import 'print.module';
+import 'query.module';
+import 'search.module';
+import 'measure.module';
+import 'permalink.module';
+import 'info.module';
+import 'datasource-selector.module';
+import 'sidebar.module';
+import 'add-layers.module';
 import pois from 'poi';
 import parcels_near_water from 'parcels_near_water';
 import soils from 'soils';
@@ -28,8 +22,14 @@ import parcels_with_CTVDPB from 'parcels_with_CTVDPB';
 import parcels_with_crop_types from 'parcels_with_crop_types';
 import parcels_with_crop_types_by_distance from 'parcels_with_crop_types_by_distance';
 import language from 'language';
-import hsCesium from 'hscesium';
-import bootstrapBundle from 'bootstrap/dist/js/bootstrap.bundle';
+import 'hscesium.module';
+import { Tile, Image as ImageLayer , Group} from 'ol/layer';
+import { TileWMS, WMTS, OSM, XYZ } from 'ol/source';
+import {ImageWMS, ImageArcGISRest} from 'ol/source';
+import View from 'ol/View';
+import {transform, transformExtent} from 'ol/proj';
+import './sentinel';
+import 'bootstrap.bundle';
 
 //define([ '', '', '', 'sidebar', 'query', 'search', 'print', 'permalink', 'measure', 'geolocation', 'api', 'hscesium', 'ows', 'datasource_selector', 'bootstrap.bundle', 'angular-gettext', 'translations_extended', ''],
 
@@ -44,7 +44,7 @@ var module = angular.module('hs', [
     'hs.geolocation',
     'hs.cesium',
     'hs.sidebar',
-    'hs.ows',
+    'hs.addLayers',
     'hs.sentinel'
 ]);
 
@@ -141,16 +141,16 @@ function getHostname() {
 module.value('config', {
     cesiumBase: '../node_modules/cesium/Build/Cesium/',
     default_layers: [
-        new ol.layer.Tile({
-            source: new ol.source.OSM(),
+        new Tile({
+            source: new OSM(),
             title: "OpenStreetMap",
             base: true,
             visible: false,
             minimumTerrainLevel: 15
         }),
-        new ol.layer.Tile({
+        new Tile({
             title: "Corine land cover (WMS)",
-            source: new ol.source.TileWMS({
+            source: new TileWMS({
                 url: 'http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/olu/european_openlandusemap.map',
                 params: {
                     LAYERS: 'corine',
@@ -164,9 +164,9 @@ module.value('config', {
             visible: false,
             opacity: 0.7
         }),
-        new ol.layer.Tile({
+        new Tile({
             title: "Production zones",
-            source: new ol.source.TileWMS({
+            source: new TileWMS({
                 url: 'http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/produkcni_zony.map',
                 params: {
                     LAYERS: 'p_zony',
@@ -179,9 +179,9 @@ module.value('config', {
             visible: false,
             opacity: 0.7
         }),
-        new ol.layer.Tile({
+        new Tile({
             title: "Open-Land-Use (WMS)",
-            source: new ol.source.TileWMS({
+            source: new TileWMS({
                 url: 'http://gis.lesprojekt.cz/cgi-bin/mapserv?map=/home/dima/maps/olu/openlandusemap.map',
                 params: {
                     LAYERS: 'olu_bbox_srid',
@@ -231,8 +231,8 @@ module.value('config', {
     'catalogue_url': "/php/metadata/csw",
     'compositions_catalogue_url': "/php/metadata/csw",
     status_manager_url: '/wwwlibs/statusmanager2/index.php',
-    default_view: new ol.View({
-        center: ol.proj.transform([14.28, 49.6], 'EPSG:4326', 'EPSG:3857'),
+    default_view: new View({
+        center: transform([14.28, 49.6], 'EPSG:4326', 'EPSG:3857'),
         zoom: 14,
         units: "m"
     }),
@@ -242,8 +242,6 @@ module.value('config', {
 module.controller('Main', ['$scope', '$compile', '$element', 'Core', 'hs.map.service', 'config', '$rootScope', 'hs.utils.service', '$sce', 'hs.sentinel.service', 'gettext',
     function ($scope, $compile, $element, Core, hs_map, config, $rootScope, utils, $sce, sentinel_service, gettext) {
         var map;
-
-        $scope.hsl_path = hsl_path; //Get this from hslayers.js file
         var hsCesium;
         $scope.Core = Core;
 
@@ -281,7 +279,7 @@ module.controller('Main', ['$scope', '$compile', '$element', 'Core', 'hs.map.ser
             })
             $rootScope.$on('map.extent_changed', function (e, elem, bounds) {
                 if (hs_map.visible) {
-                    bounds = ol.proj.transformExtent(bounds, map.getView().getProjection(), 'EPSG:4326');
+                    bounds = transformExtent(bounds, map.getView().getProjection(), 'EPSG:4326');
                     var points4 = [
                         [bounds[0], bounds[1]],
                         [bounds[2], bounds[1]],

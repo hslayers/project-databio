@@ -64,6 +64,4 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify-es');
     grunt.registerTask('default', ['jsbeautifier', 'uglify']);
     grunt.registerTask('git-pre-commit', ['jsbeautifier']);
-
-
 };

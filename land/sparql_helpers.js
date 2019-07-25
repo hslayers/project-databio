@@ -1,10 +1,15 @@
-import ol from 'ol';
+
+import { WKT, GeoJSON } from 'ol/format';
+import Feature from 'ol/Feature';
+import { Vector } from 'ol/source';
+import {transform, transformExtent} from 'ol/proj';
+import {extend} from 'ol/extent';
 
 var me = {
     fillFeatures: function (src, geom_name, response, id_field, attrs, map, $scope) {
         if (angular.isUndefined(response.results)) return;
         var features = [];
-        var format = new ol.format.WKT();
+        var format = new WKT();
         src.getFeatures().forEach(function (feature) {
             feature._flaged_for_removal = true;
         })
@@ -25,7 +30,7 @@ var me = {
                                 fields[key] = b[attrs[key]].value;
                             }
                         }
-                        var feature = new ol.Feature(fields);
+                        var feature = new Feature(fields);
                         feature.setId(b[id_field].value);
                         features.push(feature);
                     } else {
@@ -57,9 +62,9 @@ var me = {
         if (src.getFeatures().length > 0) {
             var extent = src.getFeatures()[0].getGeometry().getExtent().slice(0);
             src.getFeatures().forEach(function (feature) {
-                ol.extent.extend(extent, feature.getGeometry().getExtent())
+                extend(extent, feature.getGeometry().getExtent())
             });
-            extent = ol.proj.transformExtent(extent, map.getView().getProjection(), 'EPSG:4326');
+            extent = transformExtent(extent, map.getView().getProjection(), 'EPSG:4326');
             camera.flyTo({
                 destination: Cesium.Rectangle.fromDegrees(extent[0], extent[1], extent[2], extent[3])
             })

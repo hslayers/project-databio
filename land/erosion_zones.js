@@ -1,7 +1,14 @@
 import $ from 'jquery';
-import ol from 'ol';
 import sparql_helpers from 'sparql_helpers';
-var src = new ol.source.Vector();
+import {Style, Icon, Stroke, Fill, Circle} from 'ol/style';
+import { WKT, GeoJSON } from 'ol/format';
+import Feature from 'ol/Feature';
+import { Vector } from 'ol/source';
+import {transform, transformExtent} from 'ol/proj';
+import {extend} from 'ol/extent';
+import VectorLayer from 'ol/layer/Vector';
+
+var src = new Vector();
 var $scope;
 var $compile;
 var map;
@@ -151,18 +158,18 @@ var me = {
             })
     },
     createLayer: function (gettext) {
-        lyr = new ol.layer.Vector({
+        lyr = new VectorLayer({
             title: gettext("Erosion zones"),
             source: src,
             visible: false,
             style: function (feature, resolution) {
                 return [
-                    new ol.style.Style({
-                        stroke: new ol.style.Stroke({
+                    new Style({
+                        stroke: new Stroke({
                             color: 'rgba(40, 150, 40, 0.6)',
                             width: 2
                         }),
-                        fill: new ol.style.Fill({
+                        fill: new Fill({
                             color: 'rgba(40, 150, 40, 0.8)'
                         })
                     })
